@@ -1,0 +1,6 @@
+#VSCode files
+*.code.workspace
+
+#CPP compiler files
+*.o
+tempCodeRunnerFile.cpp

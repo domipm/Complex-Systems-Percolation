@@ -18,3 +18,9 @@ class Tree {
         char dir;
 
 };
+
+int main() {
+
+    return 0;
+
+}

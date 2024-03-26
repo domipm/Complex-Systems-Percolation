@@ -1,5 +1,6 @@
 #VSCode files
 *.code.workspace
+.vscode/settings.json
 
 #CPP compiler files
 *.o

@@ -5,3 +5,6 @@
 #CPP compiler files
 *.o
 tempCodeRunnerFile.cpp
+
+#TEST
+test_*.txt

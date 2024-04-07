@@ -7,5 +7,10 @@ Complex-Systems-Percolation.code-workspace
 *.o
 tempCodeRunnerFile.cpp
 
-#TEST
+#Output files (temporary)
+*.csv
+*.png
+
+#Testing files
 test_*.txt
+test*.png

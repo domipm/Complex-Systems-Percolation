@@ -29,12 +29,12 @@ int main() {
     for (int i = 0; i < N; i++) {
        for(int j = 0; j < sqrt(N); j++){            //Comprueba en que row está el arbol i
          if((((j-1)*sqrt(N)) < i) && (i <= (j*sqrt(N))))
-           {
-           tree[i].y = j;
-             if(abs(tree[i].y) > (2*sqrt(N)))
-             tree[i].y = 0.0;
-           }
-        }
+          tree[i].y = j;
+        } 
+
+      if(abs(tree[i].y) > (2*sqrt(N)))
+      tree[i].y = 0.0;
+        
         for(int k = 0; k < sqrt(N); k++){       //Comprueba en que column esta el tree i
           if((i % static_cast<int>(sqrt(N))) == k)
             tree[i].x = k;    

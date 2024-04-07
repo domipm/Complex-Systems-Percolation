@@ -1,9 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<cmath>
-
-#include"gsl_rng.h"
-
+#include "gsl_rng.h"
 #include "trees.h"
 
 using namespace std;
@@ -40,7 +38,7 @@ int main() {
 
         cout << "Tree number " << i+1 << " Pos X = " << tree[i].x << " Pos Y = " << tree[i].y << endl;
         
-        file << tree[i].x << "," << tree[i].y << "\n";
+        file << tree[i].x << "\t" << tree[i].y << "\n";
 
     }
 

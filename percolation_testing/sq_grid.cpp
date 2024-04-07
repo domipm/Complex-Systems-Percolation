@@ -20,7 +20,7 @@ gsl_rng *tau;
 
 int main() {
 
-    file.open("grid_positions.txt");
+    file.open("sq_grid_positions.txt");
 
     extern gsl_rng *tau;
     tau = gsl_rng_alloc(gsl_rng_taus);

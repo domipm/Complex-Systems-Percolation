@@ -44,7 +44,7 @@ nodes = []
 active_nodes = []
 
 # Probability of initially active
-P0 = 0.001
+P0 = 0.005
 # Number of radial rings (~ total radius of galaxy)
 R0 = 50
 
@@ -75,22 +75,25 @@ for i in range(len(nodes)):
 df = pd.DataFrame({"r" + str(0): r_array, "theta" + str(0): theta_array})
 
 # Number of iterations
-N = 50
+N = 20
 # Probability of star-formation propagation
-P = 0.05
+P = 0.1
 # Velocity (radial-dependent rotation)
 V = 15
 # Distance to nearest neighbor check
 D = 1.25
 
 for n in range(1,N+1):
+    print("Iteration " + str(n))
     # Percolation
+    timer = time.time()
     for i in range(len(active_nodes)):
         for j in range(len(nodes)):
             distance = np.sqrt( active_nodes[i].r**2 + nodes[j].r**2 - 2*active_nodes[i].r*nodes[j].r*np.cos(active_nodes[i].theta - nodes[j].theta))
             if (distance <= D and distance != 0 and np.random.uniform(0,1) <= P): 
                 nodes[j].is_active = True 
                 active_nodes = np.append(active_nodes, nodes[j])
+    print("End of percolation " + str(time.time() - timer))
     # Rotation
     for i in range(len(nodes)): nodes[i].theta += V / np.sqrt(nodes[i].r**3)
 

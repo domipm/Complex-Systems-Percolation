@@ -1,25 +1,29 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import time
+import pandas as pd
 
 # Function to plot all points in lattice
-def print_graph(nodes, name="", show=False):
+def print_graph(nodes, name="", show=False, show_inactive = False):
 
     for i in range(len(nodes)): 
-    
-        #if (nodes[i].is_active == False): plt.polar(nodes[i].theta, nodes[i].r,marker='o',linestyle="", color="grey")
+        # Plot inactive nodes
+        if (nodes[i].is_active == False and show_inactive == True): plt.polar(nodes[i].theta, nodes[i].r,marker='.',linestyle="", color="grey")
+        # Plot active nodes
         if (nodes[i].is_active == True): plt.polar(nodes[i].theta, nodes[i].r, marker='.', linestyle="", color="red")
-        if (nodes[i].is_tracking == True): plt.polar(nodes[i].theta, nodes[i].r,marker='.',linestyle="", color="blue")
+        # Plot tracked nodes (always on top)
+        if (nodes[i].is_tracking == True): plt.polar(nodes[i].theta, nodes[i].r, marker='.', linestyle="", color="blue")
+        # Plot neighboring nodes (always on top)
+        if (nodes[i].is_neighbor == True): plt.polar(nodes[i].theta, nodes[i].r, marker='.', linestyle="", color="green")
+    if (name != ""): plt.savefig(name, dpi=300) # Output graph to file if name provided
+    if (show == True): plt.show() # Show graph on screen
 
-    if (name != ""): plt.savefig(name, dpi=300)
-
-    if (show == True): plt.show()
-
-    plt.close()
+    plt.close() # Close previous plot before plotting next
 
 # Node class
 class Node(object):
 
-    def __init__(self, r=0, theta=0, is_active=False, p=0, is_tracking=False):
+    def __init__(self, r = 0, theta = 0, is_active = False, is_tracking = False, is_neighbor = False):
 
         # Radial and angular coordinates
         self.r = r
@@ -28,128 +32,87 @@ class Node(object):
         self.is_active = is_active
         # Tracking point
         self.is_tracking = is_tracking
+        # Tracking neighboring points
+        self.is_neighbor = is_neighbor
 
-# Array of nodes
+# Computation time measure
+start = time.time()
+
+# Array of all nodes
 nodes = []
+# Array of all active nodes
+active_nodes = []
 
 # Probability of initially active
-P0 = 0.01
-# Number of radial rings
-R0 = 49
+P0 = 0.001
+# Number of radial rings (~ total radius of galaxy)
+R0 = 50
 
-# Generate initial state
-for r in np.arange(2,R0,1):
-
+# Generate all nodes, initially non-active
+# Radius between 2 and total radius R0
+for r in np.arange(2,R0):
+    # Angular coordinate between 0 and 2pi, for each radius generate 7*r nodes
     for theta in np.linspace(0,2*np.pi,7*r):
-
-        node = Node(r,theta)
-        if (np.random.uniform(0,1) < P0): node.is_active = True
+        # Create the node
+        node = Node(r,theta) 
+        # Randomly activate some nodes
+        if (np.random.uniform(0,1) < P0): 
+            node.is_active = True
+            active_nodes = np.append(active_nodes, node)
+        # Add node to nodes array
         nodes = np.append(nodes, node)
 
-nodes[15].is_tracking = True
-nodes[36].is_tracking = True
-
 # Print initial step
-print_graph(nodes, "initial", show=False)
+print_graph(nodes, "testi.png")
+
+# Store r,theta positions in separate arrays
+r_array = []
+theta_array = []
+for i in range(len(nodes)):
+    r_array = np.append(r_array, nodes[i].r)
+    theta_array = np.append(theta_array, nodes[i].theta)
+# Create dataframe to store positions of all nodes
+df = pd.DataFrame({"r" + str(0): r_array, "theta" + str(0): theta_array})
 
 # Number of iterations
-N = 15
+N = 50
 # Probability of star-formation propagation
-P = 0.18
-# Velocity
-V = 0.05
+P = 0.05
+# Velocity (radial-dependent rotation)
+V = 15
 # Distance to nearest neighbor check
-D = 2
+D = 1.25
 
-# Perform percolation and rotation
-for n in range(N):
-
+for n in range(1,N+1):
     # Percolation
-    for i in range(len(nodes)): 
+    for i in range(len(active_nodes)):
         for j in range(len(nodes)):
-            if (j != i):
-                distance = nodes[i].r**2 + nodes[j].r**2 - 2*nodes[i].r*nodes[j].r*np.cos(nodes[i].theta - nodes[j].theta)
-                if (distance <= D and np.random.uniform(0,1) < P): nodes[j].is_active = True 
+            distance = np.sqrt( active_nodes[i].r**2 + nodes[j].r**2 - 2*active_nodes[i].r*nodes[j].r*np.cos(active_nodes[i].theta - nodes[j].theta))
+            if (distance <= D and distance != 0 and np.random.uniform(0,1) <= P): 
+                nodes[j].is_active = True 
+                active_nodes = np.append(active_nodes, nodes[j])
     # Rotation
-    for i in range(len(nodes)): 
-        nodes[i].theta = nodes[i].theta + V * nodes[i].r
+    for i in range(len(nodes)): nodes[i].theta += V / np.sqrt(nodes[i].r**3)
 
-# Print final step
-print_graph(nodes, "final")
+    # Append iteration to dataframe
+    if (n % 5 == 1):
+        # Obtain r,theta positions of all nodes
+        r_array = []
+        theta_array = []
+        for i in range(len(nodes)):
+            r_array = np.append(r_array, nodes[i].r)
+            theta_array = np.append(theta_array, nodes[i].theta)
+        # New temporary dataframe
+        df_temp = pd.DataFrame({"r" + str(n): r_array, "theta" + str(n): theta_array})
+        # Concatenate dataframes
+        df = df.join(df_temp, how="right")
 
-exit()
+# Show final graph
+print_graph(nodes, "testf", show=False)
 
-# Perform one percolation step
-for i in range(len(nodes)): 
-    
-    for j in range(len(nodes)):
+# Write output csv file
+df.to_csv("galaxy_output.csv")
 
-        if (j != i):
-
-            distance = nodes[i].r**2 + nodes[j].r**2 - 2*nodes[i].r*nodes[j].r*np.cos(nodes[i].theta - nodes[j].theta)
-            if (distance <= 2 and np.random.uniform(0,1) < 0.05): nodes[j].is_active = True 
-
-print_graph(nodes, "test2")
-
-# Rotate nodes
-
-for i in range(len(nodes)):
-
-    nodes[i].theta = nodes[i].theta + 0.25 * nodes[i].r
-
-print_graph(nodes, "test3")
-
-exit()
-
-#plt.show()
-plt.savefig("test2.png")
-plt.close()
-
-exit()
-
-for i in range(len(nodes)): 
-    
-    if (nodes[i].is_active == False): plt.polar(nodes[i].theta, nodes[i].r,marker='o',linestyle="", color="grey")
-    else: plt.polar(nodes[i].theta, nodes[i].r, marker='o', linestyle="", color="red")
-
-plt.show()
-plt.savefig("test1.png")
-plt.close()
-
-exit()
-
-# Perform next step of simulation: find nearest neighbours, activate or not, rotate (later to implement)
-
-for i in range(len(nodes)):
-
-    for j in range(len(nodes)):
-
-            if (i != j):
-                distance = nodes[i].r**2 + nodes[j].r**2 - 2*nodes[i].r*nodes[j].r*np.cos(nodes[i].theta - nodes[j].theta)
-                print(distance)
-                if (distance < 1): nodes[j].is_active = True
-
-for i in range(len(nodes)): 
-    
-    if (nodes[i].is_active == False): plt.polar(nodes[i].theta, nodes[i].r,marker='o',linestyle="", color="grey")
-    else: plt.polar(nodes[i].theta, nodes[i].r, marker='o', linestyle="", color="red")
-
-plt.savefig("test2.png")
-
-plt.close()
-
-exit()
-
-for r in np.arange(2,12,1): # Radial coordinate
-
-    theta = np.linspace(0,2*np.pi,6*r) # 
-    plt.polar(theta,np.full(len(theta),r),marker='o',linestyle="")
-
-exit()
-
-# plotting the polar coordinates on the system
-#plt.polar(theta,r,marker='o',linestyle="")
-
-# Displaying the plot
-plt.plot()
-plt.show()
+# Display total computational time
+end = time.time()
+print("Computational time: " + str(end - start))

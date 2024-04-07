@@ -30,11 +30,11 @@ int main() {
 
     for (int i = 0; i < N; i++) {
        for(int j = 0; j < sqrt(N); j++){            //Comprueba en que row está el arbol i
-         if((((j-1)*sqrt(N))<i)&&(i<=(j*sqrt(N))))
+         if((((j-1)*sqrt(N)) < i) && (i <= (j*sqrt(N))))
            tree[i].y=1.0*j;
         }
-        for(int k = 0; k < sqrt(N); k++){
-          if((i%sqrt(N))==k)
+        for(int k = 0; k < sqrt(N); k++){       //Comprueba en que column esta el tree i
+          if((i % static_cast<int>(sqrt(N))) == k)
             tree[i].x=1.0*k;    
         }
 

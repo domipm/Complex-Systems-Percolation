@@ -44,7 +44,7 @@ nodes = []
 active_nodes = []
 
 # Probability of initially active
-P0 = 0.005
+P0 = 0.0075
 # Number of radial rings (~ total radius of galaxy)
 R0 = 50
 
@@ -75,11 +75,11 @@ for i in range(len(nodes)):
 df = pd.DataFrame({"r" + str(0): r_array, "theta" + str(0): theta_array})
 
 # Number of iterations
-N = 20
+N = 10
 # Probability of star-formation propagation
-P = 0.1
+P = 0.25
 # Velocity (radial-dependent rotation)
-V = 15
+V = 55
 # Distance to nearest neighbor check
 D = 1.25
 

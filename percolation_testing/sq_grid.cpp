@@ -14,7 +14,7 @@ int N = 100;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.05;
+double P = 1.0;
 
 //Pointer
 gsl_rng *tau;
@@ -28,7 +28,7 @@ int main() {
     gsl_rng_set(tau,seed);
 
     Tree tree[N];
-
+                                      //Generates Grid
     for (int i = 0; i < N; i++) {
        for(int j = 0; j < sqrt(N); j++){            //Comprueba en que row está el arbol i
          if((((j-1)*sqrt(N)) < i) && (i <= (j*sqrt(N))))
@@ -36,20 +36,41 @@ int main() {
         } 
 
       if(abs(tree[i].y) > (2*sqrt(N)))
-      tree[i].y = 0.0;
+      tree[i].y = 0;
         
         for(int k = 0; k < sqrt(N); k++){       //Comprueba en que column esta el tree i
-          if((i % static_cast<int>(sqrt(N))) == k)
+          if((i % (int)(sqrt(N))) == k)
             tree[i].x = k;    
         }
 
-  tree[i].p_spawn = gsl_rng_uniform(tau);
 
+      cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " << (int)tree[i].y << endl;
+  
+  
+      tree[i].p_spawn = gsl_rng_uniform(tau);
+      if(tree[i].p_spawn < P)
+        tree[i].spawn = true;
 
-        cout << "Tree number " << i+1 << " Pos X = " << tree[i].x << " Pos Y = " << tree[i].y << endl;
-      
-      if(tree[i].p_spawn < P)  
-        file << tree[i].x << "\t" << tree[i].y << "\n";
+          
+      if(tree[i].spawn == true)  
+        file << (int)tree[i].x << "\t" << (int)tree[i].y << "\n";
+    }
+                                                         //Search for clusters
+    int cont = 1;
+    for(int i = 0; i < N; i++){
+    if(tree[i].spawn == true){
+      tree[i].cluster_index = cont;
+      for (int j = i+1; j < N; j++){
+         if((tree[i].next(tree[j]))&&(tree[j].spawn == true))
+           tree[j].cluster_index = cont;
+        for(int k = j+1; k < N; k++){
+            if((tree[j].next(tree[k]))&&(tree[k].spawn == true))
+               tree[k].cluster_index = cont;
+        }    
+
+      }
+
+    }
 
     }
 

@@ -16,6 +16,13 @@ class Tree {
         bool spawn;
         //Labels the cluster that the tree is in
         int cluster_index;
+        //¿Vecinos?
+        bool next (tree tree2){
+          if((abs(x - tree2.x) < 1.1)||(abs(y-tree2.y) < 1.1))
+          return true;
+          else
+          return false; 
+        }
 
 };
 

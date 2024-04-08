@@ -60,8 +60,17 @@ int main() {
                                                          //Search for clusters
     for(int i = 0; i < N; i++)
      tree[i].cluster_index = 0;
-    
-     
+
+    int cont=1;
+
+     for (int i = 0; i < N; i++){
+       if((tree[i].spawn == true)&&(tree[i].cluster_index == 0))
+       tree[i].cluster_index = cont;
+
+       CheckAllPossibleNeighbours();
+
+       cont++;
+     }
 
 
     file.close();

@@ -18,10 +18,24 @@ class Tree {
         int cluster_index;
         //¿Vecinos?
         bool next (Tree tree2){
-          if((abs(x - tree2.x) < 1.1)||(abs(y-tree2.y) < 1.1))
+          if(((abs(x - tree2.x) < 1.1)||(abs(y-tree2.y) < 1.1))&&(tree2.spawn == true))
           return true;
           else
           return false; 
+        }
+        
+        //Te dice si tiene vecinos xd
+        bool tieneVecinos(Tree tree[N]){
+          int cont = 0;
+          
+          for(int i =0; i <N i++)
+            if(Tree.next(tree[i]))
+              cont++;
+
+          if(cont == 0)
+             return false;
+             else
+             return true;
         }
 
 };

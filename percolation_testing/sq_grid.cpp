@@ -71,11 +71,11 @@ int main() {
         tree[i].cluster_index = cont;
         Cluster[cont][0]=tree[i];
        }
-
-       while (bool condition == true){
+       bool condition = true;
+       while (condition == true){
         int elementos = 1;
         for(int j = 0; j < N; j++)
-         if(Cluster[cont][j].tieneVecinosNuevos(tree[N]))
+         if(tieneVecinosNuevos(Cluster[cont][j],tree[N]) == true)
           condition == true;
           else
           condition == false;

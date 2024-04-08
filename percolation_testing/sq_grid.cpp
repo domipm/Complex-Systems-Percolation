@@ -11,10 +11,12 @@ ofstream file;
 
 //Number of trees to generate
 int N = 100;
+//Side length of the forest
+int L = 10;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 1.0;
+double P = 0.7;
 
 //Pointer
 gsl_rng *tau;
@@ -60,6 +62,7 @@ int main() {
     for(int i = 0; i < N; i++)
      tree[i].cluster_index = 0;
     
+     
 
 
     file.close();

@@ -12,6 +12,8 @@ class Tree {
         float p_spawn, p_burn, p_spread;
         //Connections of the tree to others (in a grid?) (N,S,W,E cardinal directions)
         char dir;
+        //Determines if the tree spawns
+        bool spawn;
 
 };
 

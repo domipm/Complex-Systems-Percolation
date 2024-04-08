@@ -45,7 +45,6 @@ int main() {
             tree[i].x = k;    
         }
 
-
       cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " << (int)tree[i].y << endl;
   
   

@@ -25,10 +25,10 @@ class Tree {
         }
         
         //Te dice si tiene vecinos xd
-        bool tieneVecinos(Tree tree[N]){
+        bool tieneVecinos(Tree tree[100]){
           int cont = 0;
           
-          for(int i =0; i <N i++)
+          for(int i =0; i < 100; i++)
             if(Tree.next(tree[i]))
               cont++;
 
@@ -37,6 +37,21 @@ class Tree {
              else
              return true;
         }
+      //Si tiene vecinos que aun no estan en el cluster
+      bool tieneVecinosNuevos(Tree tree[100]){
+        int cont =0;
+
+       for(int i =0; i < 100; i++)
+            if((Tree.next(tree[i]))&&(tree[i].cluster_index == 0))
+              cont++;
+
+          if(cont == 0)
+             return false;
+             else
+             return true;
+
+      }
+
 
 };
 

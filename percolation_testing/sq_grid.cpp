@@ -54,24 +54,12 @@ int main() {
       if(tree[i].spawn == true)  
         file << (int)tree[i].x << "\t" << (int)tree[i].y << "\n";
     }
+    
                                                          //Search for clusters
-    int cont = 1;
-    for(int i = 0; i < N; i++){
-    if(tree[i].spawn == true){
-      tree[i].cluster_index = cont;
-      for (int j = i+1; j < N; j++){
-         if((tree[i].next(tree[j]))&&(tree[j].spawn == true))
-           tree[j].cluster_index = cont;
-        for(int k = j+1; k < N; k++){
-            if((tree[j].next(tree[k]))&&(tree[k].spawn == true))
-               tree[k].cluster_index = cont;
-        }    
+    for(int i = 0; i < N; i++)
+     tree[i].cluster_index = 0;
+    
 
-      }
-
-    }
-
-    }
 
     file.close();
 

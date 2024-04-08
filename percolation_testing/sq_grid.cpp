@@ -13,6 +13,8 @@ ofstream file;
 int N = 100;
 //Seed for random numbers
 int seed = 932284531; 
+//General probability
+double P = 0.5;
 
 //Pointer
 gsl_rng *tau;
@@ -33,16 +35,20 @@ int main() {
           tree[i].y = j;
         } 
 
-   //   if(abs(tree[i].y) > (2*sqrt(N)))
-   //   tree[i].y = 0.0;
+      if(abs(tree[i].y) > (2*sqrt(N)))
+      tree[i].y = 0.0;
         
         for(int k = 0; k < sqrt(N); k++){       //Comprueba en que column esta el tree i
           if((i % static_cast<int>(sqrt(N))) == k)
             tree[i].x = k;    
         }
 
+  tree[i].p_spawn = gsl_rng_uniform(tau);
+
+
         cout << "Tree number " << i+1 << " Pos X = " << tree[i].x << " Pos Y = " << tree[i].y << endl;
-        
+      
+      if(tree[i].p_spawn < P)  
         file << tree[i].x << "\t" << tree[i].y << "\n";
 
     }

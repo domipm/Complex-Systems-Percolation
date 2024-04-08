@@ -15,7 +15,7 @@ class Tree {
         //Determines if the tree spawns
         bool spawn;
         //Labels the cluster that the tree is in
-        int cluster_index 
+        int cluster_index;
 
 };
 

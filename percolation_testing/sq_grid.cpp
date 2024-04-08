@@ -10,7 +10,7 @@ using namespace std;
 ofstream file;
 
 //Number of trees to generate
-int N = 100;
+int N = 400;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability

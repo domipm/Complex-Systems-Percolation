@@ -14,7 +14,7 @@ int N = 100;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.5;
+double P = 0.05;
 
 //Pointer
 gsl_rng *tau;

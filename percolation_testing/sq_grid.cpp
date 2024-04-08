@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<cmath>
+
 #include "gsl_rng.h"
 #include "trees.h"
 
@@ -9,7 +10,7 @@ using namespace std;
 ofstream file;
 
 //Number of trees to generate
-int N = 400;
+int N = 100;
 //Seed for random numbers
 int seed = 932284531; 
 
@@ -32,8 +33,8 @@ int main() {
           tree[i].y = j;
         } 
 
-      if(abs(tree[i].y) > (2*sqrt(N)))
-      tree[i].y = 0.0;
+   //   if(abs(tree[i].y) > (2*sqrt(N)))
+   //   tree[i].y = 0.0;
         
         for(int k = 0; k < sqrt(N); k++){       //Comprueba en que column esta el tree i
           if((i % static_cast<int>(sqrt(N))) == k)

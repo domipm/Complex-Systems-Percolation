@@ -16,7 +16,7 @@ int L = 10;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.5;
+double P = 0.4;
 
 //Pointer
 gsl_rng *tau;
@@ -72,16 +72,16 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
        if((tree[i].spawn == true)&&(tree[i].cluster_index == 0)){   //Si todavia no estaba en un 
         tree[i].cluster_index = cont;                              //cluster lo convierte en el 
         Cluster[cont][0]=tree[i];                                 //elemento 0 de su cluster   
-        elementos[cont]++;
+        elementos[cont]=1;
        
 
        bool condition = true;
 
        while (condition == true){                     //condition true if tiene vecinos nuevos
-        //cout << t << "\n";
+        cout << t << "\n";
 
         int c = 0;
-        for(int j = 0; j < elementos[cont]; j++)
+        for(int j = 0; j < elementos[cont]; j++)           
          if(tieneVecinosNuevos(Cluster[cont][j], tree) == true)
            c++;
 
@@ -97,8 +97,8 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
         
 
 
-        for (int k = 0; k < elementos[cont]; k++){               //Recorrer los elementos del cluster y 
-           for (int l = 0; l < N; l++)             //             añadir 1 "capa de vecinos"
+        for (int k = 0; k < elementos[cont]; k++){             //Recorrer los elementos del cluster y 
+           for (int l = 0; l < N; l++)                   //          añadir 1 "capa de vecinos"
               if((Cluster[cont][k].next(tree[l]))&&(tree[l].cluster_index == 0)){
                 tree[l].cluster_index = cont;
                 elementos[cont]++;
@@ -112,9 +112,12 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
        cont++;
        }
      }
+
+
     for(int j = 0; j < N; j++)
-      
+      if(tree[j].spawn == true)
       file << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].cluster_index << "\n";
+
 
     file.close();
 

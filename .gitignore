@@ -14,3 +14,6 @@ tempCodeRunnerFile.cpp
 #Testing files
 test_*.txt
 test*.png
+
+#GSL Library
+gsl_rng.h

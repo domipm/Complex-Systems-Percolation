@@ -16,7 +16,7 @@ int L = 10;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.9;
+double P = 0.85;
 
 //Pointer
 gsl_rng *tau;
@@ -63,43 +63,53 @@ int main() {
      elementos[i]=0; 
     }
     int cont=1;
-
+    int t=0;
      for (int i = 0; i < N; i++){
-       if((tree[i].spawn == true)&&(tree[i].cluster_index == 0)){
-        tree[i].cluster_index = cont;
-        Cluster[cont][0]=tree[i];
+       if((tree[i].spawn == true)&&(tree[i].cluster_index == 0)){   //Si todavia no estaba en un 
+        tree[i].cluster_index = cont;                              //cluster lo convierte en el 
+        Cluster[cont][0]=tree[i];                                 //elemento 0 de su cluster   
         elementos[cont]++;
-       }
+       
 
        bool condition = true;
 
-       while (condition == true){      //condition true if tiene vecinos nuevos
+       while (condition == true){         //condition true if tiene vecinos nuevos
+        cout << t;
+
         int c = 0;
         for(int j = 0; j < elementos[cont]; j++)
          if(tieneVecinosNuevos(Cluster[cont][j], tree) == true)
            c++;
 
-         if(c!=0)  
+         if(c != 0)  
           condition == true;
-          else
+          if(c == 0)
           condition == false;
         
 
+        int x=0;
+        for(int j = 0; j < N; j++)
+         if(tree[j].cluster_index == 0)
+           x++;
+
+        if( x == 0 )
+         condition = false;
+
         for (int k = 0; k < elementos[cont]; k++){               //Recorrer los elementos del cluster y 
            for (int l = 0; l < N; l++)             //             añadir 1 "capa de vecinos"
-              if(Cluster[cont][k].next(tree[l])){
+              if((Cluster[cont][k].next(tree[l]))&&(tree[l].cluster_index == 0)){
                 tree[l].cluster_index = cont;
                 elementos[cont]++;
                 Cluster[cont][elementos[cont]]=tree[l];
               }
         
         }
-        
+        t++;
        }
 
        cont++;
      }
-
+     }
     for(int j = 0; j < N; j++)
       if(tree[j].spawn == true)
       file << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].cluster_index << "\n";

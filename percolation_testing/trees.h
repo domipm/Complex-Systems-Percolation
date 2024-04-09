@@ -24,8 +24,12 @@ class Tree {
           return false; 
         }
         
-        //Te dice si tiene vecinos xd
-        bool tieneVecinos(Tree tree1, Tree tree[100]){
+        
+
+
+};
+//Te dice si tiene vecinos xd
+        bool tieneVecinos(Tree& tree1, Tree* tree){
           int cont = 0;
           
           for(int i =0; i < 100; i++)
@@ -39,7 +43,7 @@ class Tree {
         }
         
       //Si tiene vecinos que aun no estan en el cluster
-      bool tieneVecinosNuevos(Tree tree1, Tree tree[100]){
+      bool tieneVecinosNuevos(Tree& tree1, Tree* tree){
         int cont =0;
 
        for(int i =0; i < 100; i++)
@@ -52,8 +56,5 @@ class Tree {
              return true;
 
       }
-
-
-};
 
 #endif

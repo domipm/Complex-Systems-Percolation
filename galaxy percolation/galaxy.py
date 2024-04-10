@@ -15,7 +15,7 @@ def print_graph(nodes, name="", show=False, show_inactive = False):
         if (nodes[i].is_tracking == True): plt.polar(nodes[i].theta, nodes[i].r, marker='.', linestyle="", color="blue")
         # Plot neighboring nodes (always on top)
         if (nodes[i].is_neighbor == True): plt.polar(nodes[i].theta, nodes[i].r, marker='.', linestyle="", color="green")
-    if (name != ""): plt.savefig(name, dpi=300) # Output graph to file if name provided
+    if (name != ""): plt.savefig(name, dpi=300, bbox_inches='tight') # Output graph to file if name provided
     if (show == True): plt.show() # Show graph on screen
 
     plt.close() # Close previous plot before plotting next

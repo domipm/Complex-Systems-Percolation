@@ -18,3 +18,5 @@ test*.png
 #GSL Library
 gsl_rng.h
 random grid/articlecode.m
+
+#Results files

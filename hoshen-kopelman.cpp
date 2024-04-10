@@ -10,8 +10,8 @@
 /* 
 
     CODE USED TO SORT NODES IN A LATTICE INTO CLUSTERS
-    INPUTS: Text file containing parameters of all nodes "lattice.txt"
-    OUTPUTS: Text file containing the same parameters and a column of cluster index "lattice_sorted.txt"
+    INPUTS: "lattice.txt" -> Text file containing parameters of all nodes
+    OUTPUTS: "lattice_sorted.txt" -> Text file containing the same parameters sorted by cluster index
 
 */
 
@@ -152,10 +152,8 @@ class Node {
 
 // Function that prints all parameters of all the values in nodes array
 void print_all(Node nodes[N_MAX]) {
-
     for (int n = 0; n < N; n++) nodes[n].print_params();
     return;
-
 }
 
 // Function that prints all parameters of all values in nodes array in file
@@ -169,22 +167,17 @@ void write_all(Node nodes[N_MAX]) {
 
 // Function that prints all parameters of all values in nodes array in file
 void write_all_init(Node nodes[N_MAX]) {
-
     file = fopen("rnd_out_init.txt", "w");
     fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
     for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
-
     return;
-
 }
 
+// Function that checks whether two arrays are equal (all their elements are equal)
 bool equal_arr(int a[N_MAX], int b[N_MAX]) {
-
     for (int i = 0; i < N_MAX; i++)
         if (a[i] != b[i]) return false;
-
     return true;
-
 }
 
 int main(void) {

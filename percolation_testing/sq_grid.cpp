@@ -16,7 +16,7 @@ int L = 10;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.4;
+double P = 0.3;
 
 //Pointer
 gsl_rng *tau;
@@ -24,13 +24,14 @@ gsl_rng *tau;
 int main() {
 
     file.open("sq_grid_positions.txt");
+   
 
     extern gsl_rng *tau;
     tau = gsl_rng_alloc(gsl_rng_taus);
     gsl_rng_set(tau,seed);
 
     Tree tree[N];
-    Tree Cluster[N][N];   //1º entrada: nº de cluster // 2º entrada posición en el array
+    Tree Cluster[N][N];   // 1º entrada: nº de cluster // 2º entrada posición en el array
     int elementos[N];
 
                                       //Generates Grid
@@ -52,6 +53,8 @@ int main() {
       tree[i].p_spawn = gsl_rng_uniform(tau);
       if(tree[i].p_spawn < P)
         tree[i].spawn = true;
+        else
+        tree[i].spawn = false;
 
 cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " << (int)tree[i].y << " P = " << tree[i].p_spawn << "\n";
     
@@ -78,7 +81,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
        bool condition = true;
 
        while (condition == true){                     //condition true if tiene vecinos nuevos
-        cout << t << "\n";
+        //cout << t << "\n";
 
         int c = 0;
         for(int j = 0; j < elementos[cont]; j++)           
@@ -103,6 +106,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
                 tree[l].cluster_index = cont;
                 elementos[cont]++;
                 Cluster[cont][elementos[cont]]=tree[l];
+                cout << "Iteration: " << t << " Tree " << l << " joins cluster: " << cont << " for being close to tree: " << k << " of the cluster" "\n";
               }        
         }
 
@@ -115,8 +119,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
 
     for(int j = 0; j < N; j++)
-      if(tree[j].spawn == true)
-      file << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].cluster_index << "\n";
+      file << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].spawn << "\t" << tree[j].cluster_index << "\n";
 
 
     file.close();

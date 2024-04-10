@@ -13,9 +13,9 @@
 // Length of square inside which nodes are generated
 int L = 10;
 // Nodes to generate
-int N = 150;
+int N = 110;
 // Random seed
-int SEED = 912846;
+int SEED = 7548392;
 // Initial probability
 float P = 0.65;
 // Distance threshold
@@ -96,26 +96,37 @@ class Node {
 
         // Function to find whether any (at least one) neighbor of current node is labeled
         bool lab_neighbors(Node nodes[N_MAX]) {
-
             for (int i = 0; i < N; i++)
                 if (neighbors[i] != -1)
                     if ( nodes[neighbors[i]].cluster_index != -1 ) return true;
             return false;
-
         }
 
-        // Function to set all neighbors to the same cluster index
+        // Function to set all neighbors to the same cluster index (the minimum value between current node and neighbors)
         void set_cluster_neighbors(Node nodes[N_MAX]) {
-            for (int i = 0; i < N; i++) if (neighbors[i] >= 0) nodes[neighbors[i]].cluster_index = cluster_index;
+            if (n_neighbors != 0) {
+
+                for (int i = 0; i < N; i++) {
+
+                    if (neighbors[i] >= 0) {
+                        // Obtain minimum value of cluster index between current node and neighbors
+                        int cl_min = std::min(cluster_index, nodes[neighbors[i]].cluster_index);
+                        // Set neighboring node cluster indices to minimum
+                        nodes[neighbors[i]].cluster_index = cl_min;
+                        // Set current node cluster index to this same minimum
+                        cluster_index = cl_min;
+                    }
+
+                }
+
+            }
             return;
         }
 
         // Function to obtain the minimum value of cluster_index of neighboring nodes
         int min_neighbor_label(Node nodes[N_MAX]) {
-
             // If the node has no neighbors, return his own cluster index
             if (n_neighbors == 0) return cluster_index;
-            
             // Search for minimum value between its neighbors
             int min = N_MAX;
             for (int i = 1; i < N; i++) {
@@ -127,7 +138,6 @@ class Node {
             }
             if (cluster_index != -1 && cluster_index < min) return cluster_index;
             else return min;
-
         }
 
 };
@@ -148,6 +158,15 @@ void write_all(Node nodes[N_MAX]) {
     for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
 
     return;
+
+}
+
+bool equal_arr(int a[N_MAX], int b[N_MAX]) {
+
+    for (int i = 0; i < N_MAX; i++)
+        if (a[i] != b[i]) return false;
+
+    return true;
 
 }
 
@@ -195,60 +214,42 @@ int main(void) {
 
     /* THIS IS WHAT FAILS SOMETIMES */
 
-    // Go over all (active) nodes and set their cluster_index to the minimum value of their neighbors
-    for (int n = 0; n < N; n++) {
-        // Check if node is active
-        if (nodes[n].is_active == true && nodes[n].min_neighbor_label(nodes) != -1) {
-            // Set cluster index of node to the minimum of its current value and the minimum value of its neighbors
-            nodes[n].cluster_index = 
-            std::min(nodes[n].cluster_index, nodes[n].min_neighbor_label(nodes));
-            // Also set cluster_index of neighbors to the minimum between current value and value of currently considered node
-            for (int i = 0; i < N; i++) 
-                if (nodes[n].neighbors[i] != -1)
-                    nodes[nodes[n].neighbors[i]].cluster_index = std::min(nodes[n].cluster_index, nodes[nodes[n].neighbors[i]].cluster_index);
+    // Array that contains previous step (initialize with current cluster indices)
+    int cl_array_p[N_MAX] = {-1};
+    for (int i = 0; i < N_MAX; i++)
+        cl_array_p[i] = nodes[i].cluster_index;
+    // Array that contains current step (initially different from previous, so loop done at least once)
+    int cl_array_c[N_MAX] = {0};
+    // Max. number of iterations
+    int n_steps = 10;
+    int s = 0;
+    // Check if the "solution" converges (finish once arrays are equal or after n_steps)
+    while (equal_arr(cl_array_p, cl_array_c) == false || s <= n_steps ) {
+        // Set both arrays to be equal
+        for (int i = 0; i < N_MAX; i++)
+            cl_array_p[i] = cl_array_c[i];
+        // Go over all (active) nodes and set their cluster_index to the minimum value of their neighbors
+        for (int n = 0; n < N; n++) {
+            // Check if node is active
+            if (nodes[n].is_active && nodes[n].min_neighbor_label(nodes) != -1) {
+                // Find minimum cluster index between current node and neighbors
+                int cl_min = std::min(nodes[n].cluster_index, nodes[n].min_neighbor_label(nodes));
+                // Set cluster index of node to the minimum of its current value and the minimum value of its neighbors
+                nodes[n].cluster_index = cl_min;
+                for (int i = 0; i < N; i++)
+                    if (nodes[n].neighbors[i] >= 0)
+                        nodes[nodes[n].neighbors[i]].cluster_index = cl_min;
+            }   
         }
+        // Increase step counter
+        s++;
+        // Construct new current array
+        for (int i = 0; i < N_MAX; i++)
+            cl_array_c[i] = nodes[i].cluster_index;
     }
 
-    print_all(nodes);
+    //print_all(nodes);
     write_all(nodes);
-
-    /*
-
-    // Initialize cluster counter
-    int c = 0;
-    // Scan over all nodes
-    for (int n = 0; n < N; n++) {
-        // "Occupied" node
-        if (nodes[n].is_active == true) {
-            // If at least one neighboring node is labeled (Case c)
-            if (nodes[n].labeled_neighbors(nodes) > 0) {
-                // Set cluster_index to minimum of the neighbors
-                nodes[n].cluster_index = nodes[n].min_neighbor_label(nodes);
-            // If none of the neighboring nodes are labeled (Case b)
-            } else if (nodes[n].labeled_neighbors(nodes) <= 0 || nodes[n].labeled_neighbors(nodes) == N_MAX+1) { 
-                // Begin new cluster
-                c += 1;
-                // Add node to cluster
-                nodes[n].cluster_index = c;
-            }
-        }
-        // If current node is "unoccupied" simply move on (Case a)
-    }
-
-    // Go over all (active) nodes and set their cluster_index to the minimum value of their neighbors
-    for (int n = 0; n < N; n++) {
-        // Check if node is active
-        if (nodes[n].is_active == true && nodes[n].min_neighbor_label(nodes) != -1) {
-            // Set cluster index of node to the minimum of its current value and the minimum value of its neighbors
-            nodes[n].cluster_index = 
-            std::min(nodes[n].cluster_index, nodes[n].min_neighbor_label(nodes));
-            // Also set cluster_index of neighbors to the minimum between current value and value of currently considered node
-            for (int i = 0; i < N; i++) 
-                nodes[nodes[n].neighbors[i]].cluster_index = std::min(nodes[n].cluster_index, nodes[nodes[n].neighbors[i]].cluster_index);
-        }
-    }
-
-    */
 
     return 0;
 

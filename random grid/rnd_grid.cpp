@@ -14,7 +14,7 @@
 // Length of square inside which nodes are generated
 int L = 10;
 // Nodes to generate
-int N = 110;
+int N = 80;
 // Random seed
 int SEED = time(NULL);
 // Initial probability
@@ -162,6 +162,17 @@ void write_all(Node nodes[N_MAX]) {
 
 }
 
+// Function that prints all parameters of all values in nodes array in file
+void write_all_init(Node nodes[N_MAX]) {
+
+    file = fopen("rnd_out_init.txt", "w");
+    fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
+    for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
+
+    return;
+
+}
+
 bool equal_arr(int a[N_MAX], int b[N_MAX]) {
 
     for (int i = 0; i < N_MAX; i++)
@@ -196,6 +207,8 @@ int main(void) {
 
     // Find neighbors of all nodes (each nodes object now contains array with neighboring indices)
     for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes);
+
+    write_all_init(nodes);
 
     // Initialize cluster counter
     int cl = 0;

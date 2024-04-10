@@ -6,10 +6,10 @@ D = 1.1
 
 data = np.loadtxt("sq_grid_positions.txt", skiprows=1)
 
-x = data[:,0] # X position
-y = data[:,1] # Y position
-s = data[:,2] # Status (active/inactive)
-c = data[:,3] # cluster_index
+x = data[:,1] # X position
+y = data[:,2] # Y position
+s = data[:,3] # Status (active/inactive)
+c = data[:,4] # cluster_index
 
 fig, ax = plt.subplots()
 ax.set_aspect(1)

@@ -14,9 +14,9 @@ int N = 100;
 //Side length of the forest
 int L = 10;
 //Seed for random numbers
-int seed = 932284531; 
+int seed = 931287531; 
 //General probability
-double P = 0.15;
+double P = 0.45;
 
 //Pointer
 gsl_rng *tau;
@@ -24,7 +24,7 @@ gsl_rng *tau;
 int main() {
 
     file.open("sq_grid_positions.txt");
-    file << "X-Position" << "\t" << "Y-Position" << "\t" << "Spawn" << "\t" << "Cluster index" << "\n";
+    file << "index" << "X-Position" << "\t" << "Y-Position" << "\t" << "Spawn" << "\t" << "Cluster index" << "\n";
 
 
     extern gsl_rng *tau;
@@ -64,16 +64,17 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
     
                                                          //Search for clusters
     for(int i = 0; i < N; i++){
-     tree[i].cluster_index = 0;
+     tree[i].cluster_index = -1;
      elementos[i]=0; 
     }
 
 
     int cont=1;
-    
+    int t=0;
      for (int i = 0; i < N; i++){
-      int t=0;
-       if((tree[i].spawn == true)&&(tree[i].cluster_index == 0)){   //Si todavia no estaba en un 
+      cout << i << endl;
+       if((tree[i].spawn == true)&&(tree[i].cluster_index == -1)){
+                                                                   //Si todavia no estaba en un 
         tree[i].cluster_index = cont;                              //cluster lo convierte en el 
         Cluster[cont][0]=tree[i];                                 //elemento 0 de su cluster   
         elementos[cont]=1;
@@ -81,7 +82,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
        bool condition = true;
        while (condition == true){                     //condition true if tiene vecinos nuevos
-        //cout << t << "\n";
+      //  cout << t << "\n";
 
         int c = 0;
         for(int j = 0; j < elementos[cont]; j++)           
@@ -96,21 +97,22 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
         
         if (t>15000)
-          condition = false;
+         condition = false;
         
 
-
+        int polla = 0;
         for (int k = 0; k < elementos[cont]; k++){             //Recorrer los elementos del cluster y 
-           for (int l = 0; l < N; l++)                   //          añadir 1 "capa de vecinos"
-              if((Cluster[cont][k].next(tree[l]))&&(tree[l].cluster_index == 0)){
+           for (int l = 0; l < N; l++){                        //    añadir 1 "capa de vecinos"                                 
+              if((Cluster[cont][k].next(tree[l]))&&(tree[l].cluster_index == -1)){
                 tree[l].cluster_index = cont;
                 elementos[cont]++;
                 Cluster[cont][elementos[cont]]=tree[l];
-                cout << "Iteration: " << t << " Tree " << l << " joins cluster: " << cont << " for being close to tree: " << k << " of the cluster" "\n";
-              }        
+                cout << "Iteration: " << t << " Tree " << l << " joins cluster: " << cont << " for being close (d = " << sqrt((pow((tree[l].x - Cluster[cont][k].x),2))+(pow((tree[l].y - Cluster[cont][k].y),2))) << " ) to tree: " << k << " of the cluster" "\n";
+              }   
+           }
         }
-
-        t++;
+ t++; 
+      
        }
 
        cont++;
@@ -119,7 +121,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
 
     for(int j = 0; j < N; j++)
-      file << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].spawn << "\t" << tree[j].cluster_index << "\n";
+      file << j << "\t" << (int)tree[j].x << "\t" << (int)tree[j].y << "\t" << tree[j].spawn << "\t" << tree[j].cluster_index << "\n";
 
 
     file.close();

@@ -16,19 +16,22 @@ class Tree {
         //Determines if the tree spawns
         bool spawn;
         //Labels the cluster that the tree is in
-        int cluster_index;
-        //¿Vecinos?
-        bool next (Tree tree2){
-          if(((abs(x - tree2.x) < 1.1)||(abs(y-tree2.y) < 1.1))&&(tree2.spawn == true))
+        int cluster_index;   
+      //¿Vecinos?
+bool next (Tree tree2){
+          if(( sqrt((pow((x - tree2.x),2))+(pow((y - tree2.y),2))) < 1.1)&&(tree2.spawn == true)&&(spawn == true))
           return true;
           else
           return false; 
+     //   if(((x == tree2.x + 1)||(tree2.x == x + 1)||(y == tree2.y + 1)||(tree2.y == y +1))&&(tree2.spawn == true))
+     //   return true;
+     //   else
+     //   return false;
         }
-        
-        
-
 
 };
+
+
 //Te dice si tiene vecinos xd
         bool tieneVecinos(Tree& tree1, Tree* tree){
           int cont = 0;
@@ -45,10 +48,10 @@ class Tree {
         
       //Si tiene vecinos que aun no estan en el cluster
       bool tieneVecinosNuevos(Tree& tree1, Tree* tree){
-        int cont =0;
+        int cont = 0;
 
        for(int i =0; i < 100; i++)
-            if((tree1.next(tree[i]))&&(tree[i].cluster_index == 0))
+            if((tree1.next(tree[i]))&&(tree[i].cluster_index == -1))
               cont++;
 
           if(cont == 0)

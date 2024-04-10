@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import random
 
 D = 1.5
+show_circles = True
+show_index = True
+show_graph = False
 
 data = np.loadtxt("rnd_out.txt", skiprows=1)
 
@@ -23,8 +26,16 @@ ax.scatter(x,y,c=c,cmap="rainbow")
 for i in range(len(x)):
     if (s[i] == 0):
         ax.scatter(x[i],y[i],color="black")
-    if (s[i] == 1):
+    if (s[i] == 1 and show_circles == True):
         #ax.scatter(x[i],y[i],color="red")
         ax.add_artist( plt.Circle( (x[i], y[i]), D, fill=False, color="black", alpha=0.15 ) )
 
-plt.show()
+if show_index == True:
+    n = []
+    for i in range(len(x)):
+        n = np.append(n, str(i))
+    for i,n in enumerate(n):
+        ax.annotate(n,(x[i],y[i]),size=6, xytext = (x[i]+0.1,y[i]+0.1))
+
+plt.savefig("testing.png", dpi=300)
+if (show_graph): plt.show()

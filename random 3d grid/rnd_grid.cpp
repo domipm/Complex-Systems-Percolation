@@ -13,15 +13,13 @@
 // Length of square inside which nodes are generated
 int L = 10;
 // Nodes to generate
-int N = 25;
+int N = 35;
 // Random seed
 int SEED = time(NULL);
 // Initial probability
-float P = 0.65;
+float P = 0.75;
 // Distance threshold
-float D = 1.5;
-// Percolation probability
-float p = 0.25;
+float D = 3;
 
 // Random variable pointer
 gsl_rng *tau;
@@ -35,7 +33,7 @@ class Node {
         /* PARAMETERS */
 
         // Position of node
-        float x, y;
+        float x, y, z;
         // Active-or-not status
         bool is_active;
         // Node index and cluster index it belongs to
@@ -49,6 +47,7 @@ class Node {
         Node() {
             x = 0;
             y = 0;
+            z = 0;
             is_active = false;
             index = 0;
             cluster_index = -1;
@@ -60,7 +59,7 @@ class Node {
 
         // Function to output useful parameters of the node
         void print_params() {
-            printf("index=%02i\tx=%.5f\ty=%.5f\tis_active=%02i\tcluster_index=%02i\n",index,x,y,is_active,cluster_index);
+            printf("index=%02i\tx=%.5f\ty=%.5f\tz=%.5f\tis_active=%02i\tcluster_index=%02i\n",index,x,y,z,is_active,cluster_index);
             return;
         }
 
@@ -76,13 +75,13 @@ class Node {
         /* CALCULATIONS */
 
         // Function to find (active) neighbors of node and count them
-        void find_neighbors(Node nodes[N_MAX]) {
+        void find_neighbors(Node nodes[N_MAX], int D) {
             // If current node is inactive, return
             if (is_active == false) return;
             // Run over all nodes in the system
             for (int i = 0; i < N; i++) {
                 // Calculate distance between current node and all others
-                float dist = sqrt( (nodes[i].x - x)*(nodes[i].x -x) + (nodes[i].y - y)*(nodes[i].y - y) );
+                float dist = sqrt( (nodes[i].x - x)*(nodes[i].x -x) + (nodes[i].y - y)*(nodes[i].y - y) + (nodes[i].z - z)*(nodes[i].z - z) );
                 // If the distance is small (non-zero) and the other node is active
                 if (dist <= D && dist != 0 && nodes[i].is_active == true)
                     neighbors[i] = nodes[i].index; // Add neighbors to neighbor array
@@ -154,8 +153,8 @@ void print_all(Node nodes[N_MAX]) {
 void write_all(Node nodes[N_MAX]) {
 
     file = fopen("rnd_out.txt", "w");
-    fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
-    for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
+    fprintf(file, "index\tx\ty\tz\tis_active\tcluster_index\n");
+    for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].z, nodes[n].is_active, nodes[n].cluster_index);
 
     return;
 
@@ -165,8 +164,8 @@ void write_all(Node nodes[N_MAX]) {
 void write_all_init(Node nodes[N_MAX]) {
 
     file = fopen("rnd_out_init.txt", "w");
-    fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
-    for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
+    fprintf(file, "index\tx\ty\tz\tis_active\tcluster_index\n");
+    for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].z, nodes[n].is_active, nodes[n].cluster_index);
 
     return;
 
@@ -197,6 +196,7 @@ int main(void) {
         // Set the positions (random between 0 and L)
         nodes[n].x = gsl_rng_uniform(tau)*L;
         nodes[n].y = gsl_rng_uniform(tau)*L;
+        nodes[n].z = gsl_rng_uniform(tau)*L;
         // Set index of all nodes
         nodes[n].index = n;
         // Activate randomly some nodes with probability p0
@@ -206,8 +206,8 @@ int main(void) {
 
     auto start = std::chrono::high_resolution_clock::now();
 
-    // Find neighbors of all nodes (each nodes object now contains array with neighboring indices)
-    for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes);
+    // Find neighbors at distance D of all nodes (each nodes object now contains array with neighboring indices)
+    for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes, D);
 
     write_all_init(nodes);
 

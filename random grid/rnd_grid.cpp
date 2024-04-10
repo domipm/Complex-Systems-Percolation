@@ -213,8 +213,6 @@ int main(void) {
         // If node unoccupied, move on (Case a)
     }
 
-    /* THIS IS WHAT FAILS SOMETIMES */
-
     // Array that contains previous step (initialize with current cluster indices)
     int cl_array_p[N_MAX] = {-1};
     for (int i = 0; i < N_MAX; i++)

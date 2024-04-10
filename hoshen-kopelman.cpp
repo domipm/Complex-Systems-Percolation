@@ -7,6 +7,14 @@
 
 #include"gsl_rng.h"
 
+/* 
+
+    CODE USED TO SORT NODES IN A LATTICE INTO CLUSTERS
+    INPUTS: Text file containing parameters of all nodes "lattice.txt"
+    OUTPUTS: Text file containing the same parameters and a column of cluster index "lattice_sorted.txt"
+
+*/
+
 // Maximum size of arrays
 #define N_MAX 1000
 
@@ -211,6 +219,7 @@ int main(void) {
     fclose(input);
 
     // Just to check if it reads correctly (watch out for value N to show and N_MAX maximum lines read!)
+    std::cout << "INITIAL STATE" << std::endl;
     print_all(nodes);
 
     auto start = std::chrono::high_resolution_clock::now(); // "Stopwatch"
@@ -272,8 +281,14 @@ int main(void) {
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
+    // Print final state on screen
+    std::cout << "FINAL STATE" << std::endl;
+    print_all(nodes);
+
     // Display computation time
     std::cout << "Computation time: " << duration.count() << " microsec" << std::endl;
+
+    // Write final state into file
     write_all(nodes);
 
     return 0;

@@ -1,8 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<cmath>
-#include<string>
-
+#include<chrono>
 #include<stdio.h>
 #include <time.h>
 
@@ -14,7 +13,7 @@
 // Length of square inside which nodes are generated
 int L = 10;
 // Nodes to generate
-int N = 80;
+int N = 25;
 // Random seed
 int SEED = time(NULL);
 // Initial probability
@@ -205,6 +204,8 @@ int main(void) {
             nodes[n].is_active = true;
     }
 
+    auto start = std::chrono::high_resolution_clock::now();
+
     // Find neighbors of all nodes (each nodes object now contains array with neighboring indices)
     for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes);
 
@@ -260,7 +261,11 @@ int main(void) {
             cl_array_c[i] = nodes[i].cluster_index;
     }
 
-    //print_all(nodes);
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+
+    print_all(nodes);
+    std::cout << "Computation time: " << duration.count() << " microsec" << std::endl;
     write_all(nodes);
 
     return 0;

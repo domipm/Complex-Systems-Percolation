@@ -4,6 +4,7 @@
 #include<string>
 
 #include<stdio.h>
+#include <time.h>
 
 #include"gsl_rng.h"
 
@@ -15,7 +16,7 @@ int L = 10;
 // Nodes to generate
 int N = 110;
 // Random seed
-int SEED = 7548392;
+int SEED = time(NULL);
 // Initial probability
 float P = 0.65;
 // Distance threshold

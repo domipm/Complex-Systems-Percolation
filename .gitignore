@@ -12,11 +12,7 @@ tempCodeRunnerFile.cpp
 *.png
 
 #Testing files
-test_*.txt
-test*.png
+test*
 
 #GSL Library
 gsl_rng.h
-random grid/articlecode.m
-
-#Results files

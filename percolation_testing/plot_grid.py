@@ -2,20 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-D = 1.5
+D = 1.1
 
 data = np.loadtxt("sq_grid_positions.txt", skiprows=1)
 
-x = data[:,1] # X position
-y = data[:,2] # Y position
-s = data[:,3] # Status (active/inactive)
-c = data[:,4] # cluster_index
+x = data[:,0] # X position
+y = data[:,1] # Y position
+s = data[:,2] # Status (active/inactive)
+c = data[:,3] # cluster_index
 
 fig, ax = plt.subplots()
 ax.set_aspect(1)
 
-ax.set_xlim((0,10))
-ax.set_ylim((0,10))
+ax.set_xlim((-1,10))
+ax.set_ylim((-1,10))
 
 # Plot all points
 ax.scatter(x,y,c=c,cmap="rainbow")

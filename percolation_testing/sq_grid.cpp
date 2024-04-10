@@ -16,7 +16,7 @@ int L = 10;
 //Seed for random numbers
 int seed = 932284531; 
 //General probability
-double P = 0.3;
+double P = 0.15;
 
 //Pointer
 gsl_rng *tau;
@@ -24,7 +24,8 @@ gsl_rng *tau;
 int main() {
 
     file.open("sq_grid_positions.txt");
-   
+    file << "X-Position" << "\t" << "Y-Position" << "\t" << "Spawn" << "\t" << "Cluster index" << "\n";
+
 
     extern gsl_rng *tau;
     tau = gsl_rng_alloc(gsl_rng_taus);
@@ -79,7 +80,6 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
        
 
        bool condition = true;
-
        while (condition == true){                     //condition true if tiene vecinos nuevos
         //cout << t << "\n";
 
@@ -90,7 +90,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
          if(c != 0)  
           condition == true;
-          if(c == 0)
+          else
           condition == false;
 
 

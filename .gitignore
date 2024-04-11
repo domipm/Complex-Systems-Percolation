@@ -10,6 +10,7 @@ tempCodeRunnerFile.cpp
 #Output files (temporary)
 *.csv
 *.png
+*.txt
 
 #Testing files
 test*

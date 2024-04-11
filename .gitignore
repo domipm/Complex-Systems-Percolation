@@ -1,6 +1,7 @@
 #VSCode files
 *.code.workspace
 .vscode/settings.json
+*.json
 Complex-Systems-Percolation.code-workspace
 
 #CPP compiler files

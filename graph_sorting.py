@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-D = 1.5 # Parameter in the C++ programs
+D = 1.1 # Parameter in the C++ programs
 show_circles = True
 show_index = True
 show_graph = False
@@ -22,13 +22,13 @@ data_init = np.loadtxt("lattice.txt", skiprows=1)
 fig, ax = plt.subplots()
 ax.set_aspect(1)
 
-ax.set_xlim((0,10))
-ax.set_ylim((0,10))
-
 x = data_init[:,1] # X position
 y = data_init[:,2] # Y position
 s = data_init[:,3] # Status (active/inactive)
 c = data_init[:,4] # cluster_index
+
+ax.set_xlim( (min(x)-0.5, max(x)+0.5) )
+ax.set_ylim( (min(y)-0.5, max(y)+0.5) )
 
 # Plot all points
 ax.scatter(x,y,color="orangered")
@@ -64,8 +64,8 @@ c = data[:,4] # cluster_index
 fig, ax = plt.subplots()
 ax.set_aspect(1)
 
-ax.set_xlim((0,10))
-ax.set_ylim((0,10))
+ax.set_xlim( (min(x)-0.5, max(x)+0.5) )
+ax.set_ylim( (min(y)-0.5, max(y)+0.5) )
 
 # Plot all points
 ax.scatter(x,y,c=c,cmap="rainbow")

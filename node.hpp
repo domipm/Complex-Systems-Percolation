@@ -1,7 +1,7 @@
 #pragma once
 
-#include<stdio.h>
 #include<math.h>
+#include<stdio.h>
 
 #define N_MAX 1000
 
@@ -23,7 +23,6 @@ class Node {
         int n_neighbors;
 
         int N = 25;
-        float D = 1.5;
 
         // Default constructor
         Node() {
@@ -56,7 +55,7 @@ class Node {
         /* CALCULATIONS */
 
         // Function to find (active) neighbors of node and count them
-        void find_neighbors(Node nodes[N_MAX]) {
+        void find_neighbors(Node nodes[N_MAX], float D) {
             // If current node is inactive, return
             if (is_active == false) return;
             // Run over all nodes in the system

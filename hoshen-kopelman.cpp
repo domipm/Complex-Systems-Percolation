@@ -7,36 +7,18 @@
 */
 
 #include<iostream>
-#include<fstream>
-#include<cmath>
 #include<chrono>
-#include<stdio.h>
-#include<time.h>
-
-#include"gsl_rng.h"
 
 #include"node.hpp" // Include the node library that contains all useful functions
 
 // Maximum size of arrays
 #define N_MAX 1000
 
-// Length of square inside which nodes are generated
-int L = 10;
-// Nodes to generate
-int N = 25;
-// Random seed
-int SEED = time(NULL);
-// Initial probability
-float P = 0.65;
-// Distance threshold
-float D = 1.5;
-// Percolation probability
-float p = 0.25;
+// Nodes to print (later on specified by n_count)
+int N;
 
-// Random variable pointer
-gsl_rng *tau;
-// File pointer
-FILE *file;
+// Distance-to-neighbor threshold
+float D = 1.1;
 
 // Function that prints all parameters of all the values in nodes array
 void print_all(Node nodes[N_MAX]) {
@@ -46,18 +28,11 @@ void print_all(Node nodes[N_MAX]) {
 
 // Function that prints all parameters of all values in nodes array in file
 void write_all(Node nodes[N_MAX]) {
+    FILE *file;
     file = fopen("lattice_sorted.txt", "w");
     fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
     for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
     fclose(file);
-    return;
-}
-
-// Function that prints all parameters of all values in nodes array in file
-void write_all_init(Node nodes[N_MAX]) {
-    file = fopen("rnd_out_init.txt", "w");
-    fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
-    for (int n = 0; n < N; n++) fprintf(file, "%02i\t%.5f\t%.5f\t%02i\t%02i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
     return;
 }
 
@@ -72,11 +47,6 @@ int main(void) {
 
     /* INITIALIZATION */
 
-    // Initialize random number generator
-    extern gsl_rng *tau;
-    tau = gsl_rng_alloc(gsl_rng_taus);
-    gsl_rng_set(tau, SEED);
-
     // Initialize input and output files
     FILE *input, *output;
 
@@ -89,15 +59,23 @@ int main(void) {
     // Input file name "lattice.txt", fmt: "index \t x \t y \t is_active \t cluster_index \n"
     input = fopen("lattice.txt", "r");
     fscanf(input, "%*[^\n]\n"); // Skip first row
+    // Count how many rows (nodes) we have in the file
+    int n_count = 0;
     for (int i = 0; i < N_MAX; i++) {
         int is_active = 0;
         // Read all values (5 for each row) until end of file or any kind of error (return != 5)
-        if ( fscanf(input, "%i\t%f\t%f\t%i\t%i", &nodes[i].index, &nodes[i].x, &nodes[i].y, &is_active, &nodes[i].cluster_index) == 5)
+        if ( fscanf(input, "%i\t%f\t%f\t%i\t%i", &nodes[i].index, &nodes[i].x, &nodes[i].y, &is_active, &nodes[i].cluster_index) == 5) {
             nodes[i].is_active = is_active;
+            n_count = i+1;
+        }
         else i = N_MAX;
     }
     // Close the file
     fclose(input);
+
+    for (int i = 0; i < n_count; i++)
+        nodes[i].N = n_count;
+    N = n_count;
 
     // Just to check if it reads correctly (watch out for value N to show and N_MAX maximum lines read!)
     std::cout << "INITIAL STATE" << std::endl;
@@ -106,7 +84,7 @@ int main(void) {
     auto start = std::chrono::high_resolution_clock::now(); // "Stopwatch"
 
     // Find neighbors of all nodes (each nodes object now contains array with neighboring indices)
-    for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes);
+    for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes, D);
 
     // Initialize cluster counter
     int cl = 0;
@@ -131,7 +109,7 @@ int main(void) {
     // Array that contains current step (initially different from previous, so loop done at least once)
     int cl_array_c[N_MAX] = {0};
     // Max. number of iterations
-    int n_steps = 10;
+    int n_steps = 50;
     int s = 0;
     // Check if the "solution" converges (finish once arrays are equal or after n_steps)
     while (equal_arr(cl_array_p, cl_array_c) == false || s <= n_steps ) {

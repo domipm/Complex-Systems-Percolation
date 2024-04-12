@@ -3,6 +3,7 @@
 #include<stdio.h> // Used for printing and string variable
 #include<iostream>
 #include<time.h>
+#include<cmath>
 
 #include"gsl_rng.h" // Used for random number generation
 
@@ -37,7 +38,7 @@ class Lattice {
             nodes = new Node[N_MAX];
 
             // Initialize indices of nodes
-            for (int i = 0; i < N; i++) {
+            for (int i = 0; i < N_MAX; i++) {
 
                 nodes[i].index = i;
 
@@ -54,10 +55,29 @@ class Lattice {
         // Generate lattice
         void generate(std::string type, float prob) {
 
-            // Square lattice (to implement...)
+            // Random seed
+            int SEED = time(NULL);
+            // Initialize random number generator
+            extern gsl_rng *mu;
+            mu = gsl_rng_alloc(gsl_rng_taus);
+            gsl_rng_set(mu, SEED);
+
+            // Square lattice (begins at point (1,1))
             if (type == "sqr") {
 
-                printf("sqr\n");
+                printf("SQUARE LATTICE\n");
+
+                // Check if the dimensions are correct
+                if (length*length != n_nodes)
+                    // Prioritize length parameter and make number of nodes match
+                    n_nodes = length*length;
+
+                for (int n = 0; n < n_nodes; n++)  {
+                    nodes[n].x = n%length;
+                    nodes[n].y = -(n%length-n)/length;
+                    if (gsl_rng_uniform(mu) < prob)
+                        nodes[n].is_active = true;
+                }
 
             }
 
@@ -72,17 +92,12 @@ class Lattice {
 
                 printf("RANDOM LATTICE\n");
 
-                // Random seed
-                int SEED = time(NULL);
-                // Initialize random number generator
-                extern gsl_rng *mu;
-                mu = gsl_rng_alloc(gsl_rng_taus);
-                gsl_rng_set(mu, SEED);
-
                 for (int i = 0; i < n_nodes; i++) {
 
                     nodes[i].x = gsl_rng_uniform(mu)*length;
                     nodes[i].y = gsl_rng_uniform(mu)*length;
+                    if (gsl_rng_uniform(mu) < prob) 
+                        nodes[i].is_active = true;
 
                 }
 
@@ -94,11 +109,6 @@ class Lattice {
                 return;
 
             }
-
-            // Set is_active of each node to random value 1 with probability P or 0 with 1-P
-            for (int i = 0; i < n_nodes; i++)
-                if (gsl_rng_uniform(mu) < prob) 
-                    nodes[i].is_active = true;
 
             return;
 

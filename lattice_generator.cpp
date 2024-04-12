@@ -12,11 +12,11 @@
 #define N_MAX 1000
 
 // Nodes to generate
-int N = 25;
+int N = 50;
 // Length of square inside which nodes are generated
-int L = 10;
+int L = 7;
 // Initial probability
-float P = 0.65;
+float P = 0.35;
 
 int main(void) {
 
@@ -24,7 +24,7 @@ int main(void) {
     Lattice lattice(N, L);
 
     // Generate a randomly distributed lattice
-    lattice.generate("rnd", 0.5);
+    lattice.generate("sqr", P);
     // Display lattice on screen
     lattice.display_lattice();
     // Save lattice to file

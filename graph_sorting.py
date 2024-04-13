@@ -11,14 +11,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-D = 1.1 # Parameter in the C++ programs
 show_circles = True
 show_index = True
 show_graph = False
 
-# PLOT INITIAL STATE
+# READ FILES
 
 data_init = np.loadtxt("lattice.txt", skiprows=1)
+data = np.loadtxt("lattice_sorted.txt", skiprows=1)
+
+# Read D parameter from file (first entry in first column)
+D = data[0,0]
+
+# Remove first column from data
+data = np.delete(data, 0, 1)
+
+# PLOT INITIAL STATE
+
 fig, ax = plt.subplots()
 ax.set_aspect(1)
 

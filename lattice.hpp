@@ -86,6 +86,23 @@ class Lattice {
 
                 printf("tri\n");
 
+                // Check if the dimensions are correct
+                if (length*length != n_nodes)
+                    // Prioritize length parameter and make number of nodes match
+                    n_nodes = length*length;
+
+                for (int n = 0; n < n_nodes; n++)  {
+                    // Horizontal position depends on whether vertical position is even or odd
+                    int y = -(n%length-n)/length;
+                    if (y%2 == 0) // Even row
+                        nodes[n].x = n%length;
+                    else // Odd row
+                        nodes[n].x = n%length-0.5;
+                    nodes[n].y = y; // Vertical position is same as square lattice
+                    if (gsl_rng_uniform(mu) < prob)
+                        nodes[n].is_active = true;
+                }
+
             }
 
             else if (type == "rnd") {

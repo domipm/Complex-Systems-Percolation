@@ -14,7 +14,7 @@
 // Nodes to generate
 int N = 50;
 // Length of square inside which nodes are generated
-int L = 7;
+int L = 10;
 // Initial probability
 float P = 0.35;
 
@@ -24,7 +24,7 @@ int main(void) {
     Lattice lattice(N, L);
 
     // Generate a randomly distributed lattice
-    lattice.generate("sqr", P);
+    lattice.generate("tri", P);
     // Display lattice on screen
     lattice.display_lattice();
     // Save lattice to file

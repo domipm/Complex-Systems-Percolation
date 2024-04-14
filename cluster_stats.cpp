@@ -32,7 +32,7 @@ int main(void){
     // Close the file
     fclose(input);
 
-                // max = numero de clusters
+                // max = number of clusters
     int max = 0;
     for(int i = 0; i < N_MAX; i++)
         if(nodes[i].cluster_index > max)
@@ -50,7 +50,7 @@ int main(void){
         int cont = 0;
         for(int i = 0; i < n_count; i++){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
-                cluster[j].getNode(j) = nodes[i];
+                cluster[j].getNode(cont) = nodes[i];
                 cont++;
             }
             if(i == n_count - 1)            //Number of elements of the cluster
@@ -58,8 +58,11 @@ int main(void){
         }
     }
 
-                
+
+    
+
     for(int j = 0; j < max; j++){
+        
         double xmin = 10000;
         double xmax = 0;
         double ymin = 10000;
@@ -81,6 +84,13 @@ int main(void){
             cluster[j].scale = ymax - ymin;
 
     }
+
+    for(int j = 0; j < max; j++){
+        for(int i = 0; i < cluster[j].N; i++)
+            cluster[j].perimeter = cluster[j].perimeter + 4 - cluster[j].getNode(i).n_neighbors;
+    }
+
+
 
     for(int j = 0; j < max; j++)
         cout << "Cluster " << j << " Scale: " << cluster[j].scale << "\n";

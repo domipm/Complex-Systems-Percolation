@@ -28,11 +28,15 @@ class cluster{
     }
         //Characteristic scale of the cluster
     double scale;
+        //Perimeter of the cluster
+    double perimeter;    
 
     //Constructor
     cluster(){
         N = 0;
         Index = 0;
+        scale = 0;
+        perimeter = 0;
     }
 
 

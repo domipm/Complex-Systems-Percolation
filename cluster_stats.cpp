@@ -58,8 +58,10 @@ int main(void){
         }
     }
 
+    for(int j = 0; j < max; j++)
+        for(int i = 0; i < cluster[j].N; i++)
+            cout << "Cluster: " << j << " node: " << i << " cluster_index: " << cluster[j].getNode(i).cluster_index << "\n";
 
-    
 
     for(int j = 0; j < max; j++){
         
@@ -93,7 +95,7 @@ int main(void){
 
 
     for(int j = 0; j < max; j++)
-        cout << "Cluster " << j << " Scale: " << cluster[j].scale << "\n";
+        cout << "Cluster " << j << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
 
 
 }

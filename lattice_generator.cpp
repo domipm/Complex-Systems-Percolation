@@ -24,7 +24,7 @@ int main(void) {
     Lattice lattice(N, L);
 
     // Generate a randomly distributed lattice
-    lattice.generate("rnd", P);
+    lattice.generate("sqr", P);
     // Display lattice on screen
     lattice.display_lattice();
     // Save lattice to file

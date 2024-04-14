@@ -14,7 +14,7 @@ int N = 100;
 //Side length of the forest
 int L = 10;
 //Seed for random numbers
-int seed = 931287531; 
+int seed = 931277531; 
 //General probability
 double P = 0.45;
 
@@ -72,7 +72,7 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
     int cont=1;
     int t=0;
      for (int i = 0; i < N; i++){
-      cout << i << endl;
+      cout << "nodo: " << i << endl;
        if((tree[i].spawn == true)&&(tree[i].cluster_index == -1)){
                                                                    //Si todavia no estaba en un 
         tree[i].cluster_index = cont;                              //cluster lo convierte en el 
@@ -80,14 +80,14 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
         elementos[cont]=1;
        
 
-       bool condition = true;
-       while (condition == true){                     //condition true if tiene vecinos nuevos
-      //  cout << t << "\n";
+      bool condition = true;
+      while (condition == true){                     //condition true if tiene vecinos nuevos
+    cout << "t= "<< t << "\n";
 
         int c = 0;
         for(int j = 0; j < elementos[cont]; j++)           
          if(tieneVecinosNuevos(Cluster[cont][j], tree) == true)
-           c++;
+          c++;
 
          if(c != 0)  
           condition == true;
@@ -96,20 +96,19 @@ cout << "Tree number " << i+1 << " Pos X = " << (int)tree[i].x << " Pos Y = " <<
 
 
         
-        if (t>15000)
+        if (t>150)
          condition = false;
         
 
-        int polla = 0;
         for (int k = 0; k < elementos[cont]; k++){             //Recorrer los elementos del cluster y 
-           for (int l = 0; l < N; l++){                        //    añadir 1 "capa de vecinos"                                 
+           for (int l = 0; l < N; l++)                       //    añadir 1 "capa de vecinos"                                 
               if((Cluster[cont][k].next(tree[l]))&&(tree[l].cluster_index == -1)){
                 tree[l].cluster_index = cont;
                 elementos[cont]++;
                 Cluster[cont][elementos[cont]]=tree[l];
                 cout << "Iteration: " << t << " Tree " << l << " joins cluster: " << cont << " for being close (d = " << sqrt((pow((tree[l].x - Cluster[cont][k].x),2))+(pow((tree[l].y - Cluster[cont][k].y),2))) << " ) to tree: " << k << " of the cluster" "\n";
               }   
-           }
+           
         }
  t++; 
       

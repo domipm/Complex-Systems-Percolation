@@ -77,8 +77,15 @@ int main(void){
         int cont = 0;
         for(int i = 0; i < n_count; i++){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
-                cout << 1 << "\n";
                 
+                cout << "Comprobaciones:" << "\n";
+                cout << cluster[j].N << "\n";
+                cout << cont << "\n";
+                cout << nodes[i].cluster_index << "\n";
+                cout << cluster[j].tree[cont].cluster_index;
+
+
+
                 cluster[j].getNode(cont) = nodes[i];
                 
                 cout << 1 << "\n";

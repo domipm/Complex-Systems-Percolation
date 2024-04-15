@@ -78,11 +78,7 @@ int main(void){
         for(int i = 0; i < n_count; i++){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
                 cout << 1 << "\n";
-
-                if (nodes[i] == nullptr) {
-                    // nodes[i] no está inicializado correctamente
-                    cout << "nodes[" << i << "] no está inicializado correctamente." << endl;
-                }
+                
                 cluster[j].getNode(cont) = nodes[i];
                 
                 cout << 1 << "\n";

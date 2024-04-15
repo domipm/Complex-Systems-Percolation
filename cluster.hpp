@@ -17,6 +17,9 @@ class cluster{
 
     cluster(int _N) : N(_N){
         tree = new Node[N];     //Assign memory for the array
+        for (int i = 0; i < N; ++i) {
+        tree[i] = Node(); // Llama al constructor predeterminado de Node para cada elemento
+    }
     }
 
     ~cluster(){
@@ -33,7 +36,8 @@ class cluster{
     double perimeter;    
 
     //Constructor
-    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}    
+    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}
+    
 
 
 };

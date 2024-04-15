@@ -11,11 +11,12 @@ class cluster{
     int N;
         //Index
     int Index;
-        //elements of the cluster
+
+                                //elements of the cluster
     Node* tree;    
 
     cluster(int _N) : N(_N){
-        tree = new Node[N];         //Assign memory for the array
+        tree = new Node[N];     //Assign memory for the array
     }
 
     ~cluster(){
@@ -32,12 +33,7 @@ class cluster{
     double perimeter;    
 
     //Constructor
-    cluster(){
-        N = 0;
-        Index = 0;
-        scale = 0;
-        perimeter = 0;
-    }
+    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}
 
 
 };

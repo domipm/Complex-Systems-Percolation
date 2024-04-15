@@ -33,14 +33,7 @@ class cluster{
     double perimeter;    
 
     //Constructor
-    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}
-    cluster(int _N) : N(_N), Index(0), scale(0), perimeter(0) {
-        tree = new Node[N]; // Asigna memoria para el arreglo de nodos
-        // Inicializa cada nodo del árbol
-        for (int i = 0; i < N; ++i) {
-            tree[i] = Node(); // Llama al constructor predeterminado de Node para cada elemento
-    }
-    }    
+    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}    
 
 
 };

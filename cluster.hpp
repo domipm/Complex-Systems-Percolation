@@ -3,9 +3,12 @@
 #include<stdio.h>
 #include "node.hpp"
 
-class cluster{
+class Cluster{
 
     public:
+
+            //Very large number
+    int GreatN = 10000;        
 
         //Number of elements
     int N;
@@ -15,10 +18,10 @@ class cluster{
                                 //elements of the cluster
     Node* tree;    
 
-    cluster(int _N) : N(_N){
-        tree = new Node[N];     //Assign memory for the array
+    cluster(int _GreatN) : N(_GreatN){
+        tree = new Node[GreatN];     //Assign memory for the array
         for (int i = 0; i < N; ++i) {
-        tree[i] = Node(); // Llama al constructor predeterminado de Node para cada elemento
+        tree[i] = Node(); // Call default constructor of Node for each element
     }
     }
 
@@ -26,9 +29,9 @@ class cluster{
         delete[] tree;          //Frees the assigned memory
     }
 
-        //Access the element 'index' of the cluster
-    Node& getNode(int index){
-        return tree[index];
+        //Access the element 'pos' of the cluster
+    Node& getNode(int pos){
+        return tree[pos];
     }
         //Characteristic scale of the cluster
     double scale;
@@ -36,7 +39,12 @@ class cluster{
     double perimeter;    
 
     //Constructor
-    cluster() : tree(nullptr), N(0), Index(0), scale(0), perimeter(0) {}
+    cluster()   {
+        N=0; 
+        Index=0; 
+        scale=0; 
+        perimeter=0;
+        }
     
 
 

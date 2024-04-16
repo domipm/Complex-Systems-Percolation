@@ -38,10 +38,7 @@ int main(void){
         if(nodes[j].is_active)
         actives++;
     }
-
-
-    cout << n_count << "\n";
-    cout << actives << "\n";
+    
 
                 // max = number of clusters
     int max = 0;
@@ -49,9 +46,15 @@ int main(void){
         if(nodes[i].cluster_index > max)
             max = nodes[i].cluster_index;
 
-    cout << max << "\n";
 
-    cluster cluster[max];
+    cout << max << "\n";
+    cout << n_count << "\n";
+    cout << actives << "\n";
+
+
+    //cluster cluster[max];
+    Cluster *cluster;
+    cluster = new Cluster[max];
 
                 //Set the index of all the clusters
     for(int j = 0; j < max; j++)
@@ -67,10 +70,10 @@ int main(void){
             if(i == n_count - 1)            //Number of elements of the cluster
                 cluster[j].N = cont;
         }
-        //cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
+        cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
     }
     
-    
+/*
     
                 //Fill the elements of the clusters
     for(int j =0; j < max; j++){
@@ -78,26 +81,27 @@ int main(void){
         for(int i = 0; i < n_count; i++){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
                 
-                cout << "Comprobaciones:" << "\n";
-                cout << cluster[j].N << "\n";
+                //cout << "Comprobaciones:" << "\n";
+                //cout << cluster[j].N << "\n";
+                //cout << nodes[i].cluster_index << "\n";
+                //cout << cluster[j].getNode(cont).cluster_index;
+                //cout << cluster[j].GreatN << "\n";
+                //cout << cluster[j].getNode(cont).x << "\n";
+                //cluster[j].getNode(cont).x = nodes[i].x;
+                //cluster[j].getNode(cont).y = nodes[i].y;
+                //cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
+                cout << j << "\n";
                 cout << cont << "\n";
-                cout << nodes[i].cluster_index << "\n";
-                cout << cluster[j].tree[cont].cluster_index;
-
-
-
-                cluster[j].getNode(cont) = nodes[i];
-                
-                cout << 1 << "\n";
                 cont++;
             }
         }
     }
 
 
-    
+*/
 
 
+/*
     for(int j = 0; j < max; j++){
         
         double xmin = 10000;
@@ -122,6 +126,7 @@ int main(void){
 
     }
 
+
     for(int j = 0; j < max; j++){
         for(int i = 0; i < cluster[j].N; i++)
             cluster[j].perimeter = cluster[j].perimeter + 4 - cluster[j].getNode(i).n_neighbors;
@@ -132,5 +137,8 @@ int main(void){
     for(int j = 0; j <= max; j++)
         cout << "Cluster " << j << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
 
+*/
+
+return 0;
 
 }

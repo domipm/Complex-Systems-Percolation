@@ -16,18 +16,18 @@ class Cluster{
     int Index;
 
                                 //elements of the cluster
-    Node* tree;    
+    Node* tree;   
 
-    cluster(int _N) : N(_N){
-        tree = new Node[N];     //Assign memory for the array
-        for (int i = 0; i < N; ++i) {
-        tree[i] = Node(); // Call default constructor of Node for each element
-    }
-    }
-
-    ~cluster(){
-        delete[] tree;          //Frees the assigned memory
-    }
+    //Constructor
+    Cluster()   {
+        tree = new Node[N_MAX];
+        for (int i = 0; i < N_MAX; i++)
+            tree[i].index = i;
+        N=0; 
+        Index=0; 
+        scale=0; 
+        perimeter=0;
+    } 
 
         //Access the element 'pos' of the cluster
     Node& getNode(int pos){
@@ -37,15 +37,5 @@ class Cluster{
     double scale;
         //Perimeter of the cluster
     double perimeter;    
-
-    //Constructor
-    Cluster()   {
-        N=0; 
-        Index=0; 
-        scale=0; 
-        perimeter=0;
-        }
     
-
-
 };

@@ -73,7 +73,6 @@ int main(void){
         cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
     }
     
-/*
     
                 //Fill the elements of the clusters
     for(int j =0; j < max; j++){
@@ -87,21 +86,17 @@ int main(void){
                 //cout << cluster[j].getNode(cont).cluster_index;
                 //cout << cluster[j].GreatN << "\n";
                 //cout << cluster[j].getNode(cont).x << "\n";
-                //cluster[j].getNode(cont).x = nodes[i].x;
-                //cluster[j].getNode(cont).y = nodes[i].y;
+                cluster[j].getNode(cont).x = nodes[i].x;
+                cluster[j].getNode(cont).y = nodes[i].y;
+                cout << cluster[j].getNode(cont).y << endl;
                 //cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
-                cout << j << "\n";
-                cout << cont << "\n";
+                //cout << j << "\n";
+                //cout << cont << "\n";
                 cont++;
             }
         }
     }
 
-
-*/
-
-
-/*
     for(int j = 0; j < max; j++){
         
         double xmin = 10000;
@@ -136,8 +131,6 @@ int main(void){
 
     for(int j = 0; j <= max; j++)
         cout << "Cluster " << j << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
-
-*/
 
 return 0;
 

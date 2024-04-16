@@ -73,7 +73,7 @@ int main(void){
         cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
     }
     
-/*
+
     
                 //Fill the elements of the clusters
     for(int j =0; j < max; j++){
@@ -84,24 +84,24 @@ int main(void){
                 //cout << "Comprobaciones:" << "\n";
                 //cout << cluster[j].N << "\n";
                 //cout << nodes[i].cluster_index << "\n";
-                //cout << cluster[j].getNode(cont).cluster_index;
+                //cout << cluster[j].tree[cont].cluster_index;
                 //cout << cluster[j].GreatN << "\n";
                 //cout << cluster[j].getNode(cont).x << "\n";
                 //cluster[j].getNode(cont).x = nodes[i].x;
                 //cluster[j].getNode(cont).y = nodes[i].y;
                 //cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
-                cout << j << "\n";
-                cout << cont << "\n";
+                //cout << j << "\n";
+                //cout << cont << "\n";
                 cont++;
             }
         }
     }
 
 
-*/
 
 
-/*
+
+
     for(int j = 0; j < max; j++){
         
         double xmin = 10000;
@@ -109,9 +109,9 @@ int main(void){
         double ymin = 10000;
         double ymax = 0;
         for(int i = 0; i < cluster[j].N; i++){          //Defines the up, down, left & right limits of the cluster  
-            if(cluster[j].getNode(i).x < xmin)
+            if((nodes(i).x < xmin)&&(nodes[i].cluster_index == cluster[j].Index))
                 xmin = cluster[j].getNode(i).x;
-            if(cluster[j].getNode(i).x > xmax)
+            if((nodes[i].x > xmax)&&((nodes[i].cluster_index == cluster[j].Index)))
                 xmax = cluster[j].getNode(i).x;
             if(cluster[j].getNode(i).y < ymin)
                 ymin = cluster[j].getNode(i).y;
@@ -126,7 +126,7 @@ int main(void){
 
     }
 
-
+/*
     for(int j = 0; j < max; j++){
         for(int i = 0; i < cluster[j].N; i++)
             cluster[j].perimeter = cluster[j].perimeter + 4 - cluster[j].getNode(i).n_neighbors;

@@ -18,8 +18,8 @@ class Cluster{
                                 //elements of the cluster
     Node* tree;    
 
-    cluster(int _GreatN) : N(_GreatN){
-        tree = new Node[GreatN];     //Assign memory for the array
+    cluster(int _N) : N(_N){
+        tree = new Node[N];     //Assign memory for the array
         for (int i = 0; i < N; ++i) {
         tree[i] = Node(); // Call default constructor of Node for each element
     }
@@ -39,7 +39,7 @@ class Cluster{
     double perimeter;    
 
     //Constructor
-    cluster()   {
+    Cluster()   {
         N=0; 
         Index=0; 
         scale=0; 

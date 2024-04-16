@@ -30,7 +30,6 @@ class Lattice {
         // Create default node array (pointer to)
         Node *nodes;
         
-        
         // Constructor
         Lattice(int N, int L) {
 
@@ -38,11 +37,8 @@ class Lattice {
             nodes = new Node[N_MAX];
 
             // Initialize indices of nodes
-            for (int i = 0; i < N_MAX; i++) {
-
+            for (int i = 0; i < N_MAX; i++)
                 nodes[i].index = i;
-
-            }
 
             // Set number of nodes, length of square and probability of being active
             n_nodes = N;

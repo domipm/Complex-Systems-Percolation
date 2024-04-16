@@ -15,20 +15,27 @@ class Cluster{
         //Index
     int Index;
 
-    
-        //Characteristic scale of the cluster
-    double scale;
-        //Perimeter of the cluster
-    double perimeter;    
+                                //elements of the cluster
+    Node* tree;   
 
     //Constructor
     Cluster()   {
+        tree = new Node[N_MAX];
+        for (int i = 0; i < N_MAX; i++)
+            tree[i].index = i;
         N=0; 
         Index=0; 
         scale=0; 
         perimeter=0;
-        }
+    } 
+
+        //Access the element 'pos' of the cluster
+    Node& getNode(int pos){
+        return tree[pos];
+    }
+        //Characteristic scale of the cluster
+    double scale;
+        //Perimeter of the cluster
+    double perimeter;    
     
-
-
 };

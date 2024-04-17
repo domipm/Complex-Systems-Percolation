@@ -132,6 +132,7 @@ int main(void){
     for(int j = 0; j <= max; j++)
         cout << "Cluster " << j << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
 
+cout << "ultimate" << "\n";
 return 0;
 
 }

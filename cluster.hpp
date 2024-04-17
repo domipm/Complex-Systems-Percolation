@@ -34,8 +34,8 @@ class Cluster{
         return tree[pos];
     }
         //Characteristic scale of the cluster
-    double scale;
+    int scale;
         //Perimeter of the cluster
-    double perimeter;    
+    int perimeter;    
     
 };

@@ -23,8 +23,8 @@ int main(void){
     int n_count = 0;
     for (int i = 0; i < N_MAX; i++) {
         int temp;
-        // Read all values (5 for each row) until end of file or any kind of error (return != 5)
-        if ( fscanf(input, "%i\t%f\t%f\t%i\t%i", &nodes[i].index, &nodes[i].x, &nodes[i].y, &temp, &nodes[i].cluster_index) == 5) {
+        // Read all values (5 for each row) until end of file or any kind of error (return != 6)
+        if ( fscanf(input, "%i\t%f\t%f\t%i\t%i\t%i", &nodes[i].index, &nodes[i].x, &nodes[i].y, &temp, &nodes[i].cluster_index, &nodes[i].n_neighbors) == 6) {
             n_count = i+1;
             nodes[i].is_active = temp;
         }
@@ -35,8 +35,10 @@ int main(void){
 
     int actives = 0;
     for (int j = 0; j < n_count; j++){
-        if(nodes[j].is_active)
+        if(nodes[j].is_active){
         actives++;
+        //cout << nodes[j].n_neighbors << "\n";
+        }
     }
     
 
@@ -47,9 +49,9 @@ int main(void){
             max = nodes[i].cluster_index;
 
 
-    cout << max << "\n";
-    cout << n_count << "\n";
-    cout << actives << "\n";
+    cout << "Number of Clusters: " << max << "\n";
+    cout << "Total number of nodes: " << n_count << "\n";
+    cout << "Number of active nodes: " << actives << "\n";
 
 
     //cluster cluster[max];
@@ -70,7 +72,7 @@ int main(void){
             if(i == n_count - 1)            //Number of elements of the cluster
                 cluster[j].N = cont;
         }
-        cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
+        //cout << "Cluster: " << j << " Numb of nodes: " << cluster[j].N << "\n";
     }
     
     
@@ -81,15 +83,15 @@ int main(void){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
                 
                 //cout << "Comprobaciones:" << "\n";
-                //cout << cluster[j].N << "\n";
                 //cout << nodes[i].cluster_index << "\n";
-                //cout << cluster[j].tree[cont].cluster_index;
                 //cout << cluster[j].GreatN << "\n";
                 //cout << cluster[j].getNode(cont).x << "\n";
+                cluster[j].getNode(cont).cluster_index = nodes[i].cluster_index;
                 cluster[j].getNode(cont).x = nodes[i].x;
                 cluster[j].getNode(cont).y = nodes[i].y;
-                cout << cluster[j].getNode(cont).y << endl;
-                //cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
+                cluster[j].getNode(cont).is_active = nodes[i].is_active;
+                cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
+                //cout << cluster[j].getNode(cont).y << endl;
                 //cout << j << "\n";
                 //cout << cont << "\n";
                 cont++;
@@ -109,35 +111,65 @@ int main(void){
         double ymin = 10000;
         double ymax = 0;
         for(int i = 0; i < cluster[j].N; i++){          //Defines the up, down, left & right limits of the cluster  
-            if((nodes[i].x < xmin)&&(nodes[i].cluster_index == cluster[j].Index))
+            if(cluster[j].getNode(i).x < xmin)
                 xmin = cluster[j].getNode(i).x;
-            if((nodes[i].x > xmax)&&((nodes[i].cluster_index == cluster[j].Index)))
+            if(cluster[j].getNode(i).x > xmax)
                 xmax = cluster[j].getNode(i).x;
             if(cluster[j].getNode(i).y < ymin)
                 ymin = cluster[j].getNode(i).y;
             if(cluster[j].getNode(i).y > ymax)
-                ymax = cluster[j].getNode(i).y;
+                ymax = cluster[j].getNode(i).y;        
         }
-    
-        if((xmax - xmin)>(ymax - ymin))
-            cluster[j].scale = xmax - xmin;
-        else
-            cluster[j].scale = ymax - ymin;
 
+        
+        if(cluster[j].N == 0)
+            cluster[j].scale = 0;
+        else if(cluster[j].N == 1)
+            cluster[j].scale = 1;
+        else if((xmax - xmin)>(ymax - ymin))
+            cluster[j].scale = (xmax - xmin) +1;
+        else
+            cluster[j].scale = (ymax - ymin) +1;
+
+        /*
+        cout << "For cluster " << j << " that has " << cluster[j].N << " nodes: Xmax= " << xmax << ", Xmin= " << xmin << ", Ymax= " << ymax << ", Ymin= " << ymin << "\n";
+        cout << "One element of the cluster is x=" << cluster[j].getNode(0).x << " y=" << cluster[j].getNode(1).y << "\n";
+        cout << "Scale= " << cluster[j].scale << "\n";
+        cout << "\n";
+        */
     }
 
 
     for(int j = 0; j < max; j++){
+        cluster[j].perimeter = 0;
         for(int i = 0; i < cluster[j].N; i++)
-            cluster[j].perimeter = cluster[j].perimeter + 4 - cluster[j].getNode(i).n_neighbors;
+            cluster[j].perimeter = cluster[j].perimeter + 4 -cluster[j].getNode(i).n_neighbors;
     }
 
 
 
-    for(int j = 0; j <= max; j++)
-        cout << "Cluster " << j << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
+    //for(int j = 0; j < max; j++)
+    //    cout << "Cluster: " << j << " Nodes:" << cluster[j].N << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
 
-cout << "ultimate" << "\n";
+    int L;
+    float P;
+
+    FILE *stats;
+    stats = fopen("lattice_stats.txt", "r");
+    fscanf(stats, "%i\t%f", &L, &P);
+    fclose(stats);
+
+    char filename[100]; // Asegúrate de que el tamaño sea suficiente para contener el nombre del archivo
+    sprintf(filename, "cluster_data_(L=%i, P=%f.txt", L, P);
+    
+    FILE *file;
+    file = fopen(filename, "w");
+    fprintf(file, "cluster_index\tscale\tperimeter\n");
+    for (int n = 0; n < max; n++)
+        if(cluster[n].N != 0)
+            fprintf(file, "%i\t%i\t%i\n", cluster[n].Index, cluster[n].scale, cluster[n].perimeter);
+    fclose(file);
+
 return 0;
 
 }

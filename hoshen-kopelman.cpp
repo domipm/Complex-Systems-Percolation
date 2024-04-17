@@ -30,9 +30,9 @@ void print_all(Node nodes[N_MAX]) {
 void write_all(Node nodes[N_MAX]) {
     FILE *file;
     file = fopen("lattice_sorted.txt", "w");
-    fprintf(file, "index\tx\ty\tis_active\tcluster_index\n");
-    fprintf(file, "%.3f\t0\t0\t0\t0\n", D); // Print distance threshold used to find neighbors
-    for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index);
+    fprintf(file, "index\tx\ty\tis_active\tcluster_index\tn_neighbors\n");
+    fprintf(file, "%.3f\t0\t0\t0\t0\t0\n", D); // Print distance threshold used to find neighbors
+    for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index, nodes[n].n_neighbors);
     fclose(file);
     return;
 }

@@ -12,11 +12,11 @@
 #define N_MAX 1000
 
 // Nodes to generate
-int N = 50;
+int N = 400;
 // Length of square inside which nodes are generated
-int L = 10;
+int L = 20;
 // Initial probability
-float P = 0.45;
+float P = 0.5;
 
 int main(void) {
 
@@ -29,7 +29,11 @@ int main(void) {
     lattice.display_lattice();
     // Save lattice to file
     lattice.write_lattice();
-
+    // Generate a file with the characteristics of the lattice
+    FILE *file;
+    file = fopen("lattice_stats.txt", "w");
+    fprintf(file, "%i\t%f\n", L, P);
+    fclose(file);
     return 0;
 
 }

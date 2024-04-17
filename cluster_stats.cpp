@@ -98,10 +98,10 @@ int main(void){
     }
 
 
-*/
 
 
-/*
+
+
     for(int j = 0; j < max; j++){
         
         double xmin = 10000;
@@ -109,7 +109,7 @@ int main(void){
         double ymin = 10000;
         double ymax = 0;
         for(int i = 0; i < cluster[j].N; i++){          //Defines the up, down, left & right limits of the cluster  
-            if((nodes(i).x < xmin)&&(nodes[i].cluster_index == cluster[j].Index))
+            if((nodes[i].x < xmin)&&(nodes[i].cluster_index == cluster[j].Index))
                 xmin = cluster[j].getNode(i).x;
             if((nodes[i].x > xmax)&&((nodes[i].cluster_index == cluster[j].Index)))
                 xmax = cluster[j].getNode(i).x;
@@ -126,7 +126,7 @@ int main(void){
 
     }
 
-/*
+
     for(int j = 0; j < max; j++){
         for(int i = 0; i < cluster[j].N; i++)
             cluster[j].perimeter = cluster[j].perimeter + 4 - cluster[j].getNode(i).n_neighbors;

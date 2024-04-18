@@ -8,4 +8,4 @@ The python script "graph_sorting.py" plots the lattices for the initial and sort
 
 In the different folders are located additional percolation use cases and examples. Inside "./random 2d grid" and "./random 3d grid" are self-contained codes that generate two- and three-dimensional lattices and find clusters via the previously mentioned algorithm. "./galaxy percolation" contains a python script that studies the star-forming regions in spiral galaxies from the point of view of percolation systems. Finally, "./forest fire" contains all the necessary code to solve the problem proposed in the project, and that is how many trees would we have to cut in order to stop the spread of fire in a forest.
 
-Apart from the standard C++ and Python libraries, we also make use of the library GSL (in particular, the module "gsl_rng" used to generate random numbers).
+Apart from the standard C++ and Python libraries, we also make use of the GSL library (in particular, the module "gsl_rng" used to generate random numbers).

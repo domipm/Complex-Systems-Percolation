@@ -6,16 +6,16 @@
 
 */
 
-#include<iostream>
-#include<chrono>
-
-#include"node.hpp" // Include the node library that contains all useful functions
+#include"percolation.hpp"
 
 // Maximum size of arrays
 #define N_MAX 1000
 
 // Nodes to print (later on specified by n_count)
 int N;
+
+int L;
+float P;
 
 // Distance-to-neighbor threshold
 float D = 1.25;
@@ -30,8 +30,10 @@ void print_all(Node nodes[N_MAX]) {
 void write_all(Node nodes[N_MAX]) {
     FILE *file;
     file = fopen("lattice_sorted.txt", "w");
+    fprintf(file, "%i\t%.5f\n", L, P); // Print lattice stats
+    fprintf(file, "%.3f\n", D); // Print distance threshold used to find neighbors
+    // Print index, position, is_active, cluster_index and n_neighbors
     fprintf(file, "index\tx\ty\tis_active\tcluster_index\tn_neighbors\n");
-    fprintf(file, "%.3f\t0\t0\t0\t0\t0\n", D); // Print distance threshold used to find neighbors
     for (int n = 0; n < N; n++) fprintf(file, "%i\t%.5f\t%.5f\t%i\t%i\t%i\n", nodes[n].index, nodes[n].x, nodes[n].y, nodes[n].is_active, nodes[n].cluster_index, nodes[n].n_neighbors);
     fclose(file);
     return;
@@ -59,7 +61,8 @@ int main(void) {
 
     // Input file name "lattice.txt", fmt: "index \t x \t y \t is_active \t cluster_index \n"
     input = fopen("lattice.txt", "r");
-    fscanf(input, "%*[^\n]\n"); // Skip first row
+    fscanf(input, "%i\t%f\n", &L, &P); // Read lattice stats
+    fscanf(input, "%*[^\n]\n"); // Skip second row
     // Count how many rows (nodes) we have in the file
     int n_count = 0;
     for (int i = 0; i < N_MAX; i++) {
@@ -71,6 +74,7 @@ int main(void) {
         }
         else i = N_MAX;
     }
+
     // Close the file
     fclose(input);
 
@@ -85,12 +89,12 @@ int main(void) {
     auto start = std::chrono::high_resolution_clock::now(); // "Stopwatch"
 
     // Find neighbors of all nodes (each nodes object now contains array with neighboring indices)
-    for (int n = 0; n < N; n++) nodes[n].find_neighbors(nodes, D);
+    for (int n = 0; n < n_count; n++) nodes[n].find_neighbors(nodes, D);
 
     // Initialize cluster counter
     int cl = 0;
     // Scan over all nodes
-    for (int n = 0; n < N; n++) {
+    for (int n = 0; n < n_count; n++) {
         // Consider occupied nodes only
         if (nodes[n].is_active == true) {
             // At least one neighboring node labeled (Case c) -> Set cluster_index to minimum of the neighbors
@@ -125,7 +129,7 @@ int main(void) {
                 int cl_min = std::min(nodes[n].cluster_index, nodes[n].min_neighbor_label(nodes));
                 // Set cluster index of node to the minimum of its current value and the minimum value of its neighbors
                 nodes[n].cluster_index = cl_min;
-                for (int i = 0; i < N; i++)
+                for (int i = 0; i < n_count; i++)
                     if (nodes[n].neighbors[i] >= 0)
                         nodes[nodes[n].neighbors[i]].cluster_index = cl_min;
             }   

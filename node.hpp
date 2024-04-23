@@ -3,7 +3,7 @@
 #include<math.h>
 #include<stdio.h>
 
-#define N_MAX 1000
+#define N_MAX 10000
 
 class Node {
 

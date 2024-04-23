@@ -9,14 +9,14 @@
 #include"lattice.hpp" // Include lattice library that contains all useful functions
 
 // Maximum size of arrays
-#define N_MAX 1000
+#define N_MAX 10000
 
 // Nodes to generate
-int N = 400;
+int N = 625;
 // Length of square inside which nodes are generated
-int L = 20;
+int L = 25;
 // Initial probability
-float P = 0.5;
+float P = 0.1;
 
 int main(void) {
 

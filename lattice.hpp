@@ -9,7 +9,7 @@
 
 #include"node.hpp" // Include so we can create nodes
 
-#define N_MAX 1000
+#define N_MAX 10000
 
 // Random variable pointer
 gsl_rng *mu;

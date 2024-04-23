@@ -58,6 +58,8 @@ int main(void){
     Cluster *cluster;
     cluster = new Cluster[max];
 
+    cout << "que" << "\n";
+
                 //Set the index of all the clusters
     for(int j = 0; j < max; j++)
         cluster[j].Index = j+1;
@@ -76,6 +78,7 @@ int main(void){
     }
     
     
+
                 //Fill the elements of the clusters
     for(int j =0; j < max; j++){
         int cont = 0;
@@ -99,7 +102,7 @@ int main(void){
         }
     }
 
-
+    
 
 
 
@@ -160,7 +163,7 @@ int main(void){
     fclose(stats);
 
     char filename[100]; // Asegúrate de que el tamaño sea suficiente para contener el nombre del archivo
-    sprintf(filename, "cluster_data_(L=%i, P=%f.txt", L, P);
+    sprintf(filename, "cluster_data_(L=%i, P=%f).txt", L, P);
     
     FILE *file;
     file = fopen(filename, "w");

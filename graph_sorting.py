@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import random
 
 show_circles = True
-show_index = True
+show_index = False
 show_graph = False
 
 # READ FILES

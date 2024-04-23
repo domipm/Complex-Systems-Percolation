@@ -6,15 +6,16 @@
 
 */
 
-#include"lattice.hpp" // Include lattice library that contains all useful functions
+// Include library with all classes necessary
+#include"percolation.hpp"
 
 // Maximum size of arrays
 #define N_MAX 10000
 
 // Nodes to generate
-int N = 625;
+int N = 250;
 // Length of square inside which nodes are generated
-int L = 25;
+int L = 15;
 // Initial probability
 float P = 0.1;
 
@@ -28,12 +29,8 @@ int main(void) {
     // Display lattice on screen
     lattice.display_lattice();
     // Save lattice to file
-    lattice.write_lattice();
-    // Generate a file with the characteristics of the lattice
-    FILE *file;
-    file = fopen("lattice_stats.txt", "w");
-    fprintf(file, "%i\t%f\n", L, P);
-    fclose(file);
+    lattice.write_lattice(L, P);
+
     return 0;
 
 }

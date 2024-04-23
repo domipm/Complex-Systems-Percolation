@@ -9,7 +9,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 show_circles = True
 show_index = False
@@ -17,14 +16,11 @@ show_graph = False
 
 # READ FILES
 
-data_init = np.loadtxt("lattice.txt", skiprows=1)
-data = np.loadtxt("lattice_sorted.txt", skiprows=1)
+data_init = np.loadtxt("lattice.txt", skiprows=2)
+data = np.loadtxt("lattice_sorted.txt", skiprows=3)
 
-# Read D parameter from file (first entry in first column)
-D = data[0,0]
-
-# Remove first column from data
-data = np.delete(data, 0, 1)
+# Neighbor distance parameter D (get from Hoshen-Kopelman algorithm)
+D = 1.25
 
 # PLOT INITIAL STATE
 
@@ -59,11 +55,10 @@ if show_index == True:
 plt.tight_layout()
 
 plt.savefig("lattice.png", dpi=300, bbox_inches='tight')
+if (show_graph): plt.show()
 plt.close()
 
 # PLOT FINAL STATE
-
-data = np.loadtxt("lattice_sorted.txt", skiprows=1)
 
 x = data[:,1] # X position
 y = data[:,2] # Y position
@@ -97,3 +92,4 @@ plt.tight_layout()
 
 plt.savefig("lattice_sorted.png", dpi=300, bbox_inches='tight')
 if (show_graph): plt.show()
+plt.close()

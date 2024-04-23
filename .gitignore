@@ -14,7 +14,7 @@ tempCodeRunnerFile.cpp
 *.txt
 
 #Extensionless files
-*
+#*
 !*/
 
 #Testing files

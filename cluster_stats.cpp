@@ -1,10 +1,14 @@
-#include<iostream>
-#include<math.h>
-#include<stdio.h>
-#include "node.hpp"
-#include "cluster.hpp"
-using namespace std;
+/* 
 
+    CODE USED TO OBTAIN THE DATA OF ALL CLUSTERS
+    INPUTS: "lattice_sorted.txt" -> Obtained by "hoshen-kopelman.cpp" algorithm that sorts nodes into clusters
+    OUTPUTS: "cluster_data.txt" -> Text file will each cluster and its scale and perimeter
+
+*/
+
+#include"percolation.hpp"
+
+using namespace std;
 
 int main(void){
 
@@ -13,12 +17,15 @@ int main(void){
     Node *nodes;
     nodes = new Node[N_MAX];
     FILE *input;
-    
+
+    int L; // Length of square
+    float P; // Probability of spawn
 
     // Input file name "lattice_sorted.txt", fmt: "index \t x \t y \t is_active \t cluster_index \n"
     input = fopen("lattice_sorted.txt", "r");
-    fscanf(input, "%*[^\n]\n"); // Skip first row
-    fscanf(input, "%*[^\n]\n");
+    fscanf(input, "%i\t%f\n", &L, &P); // Read L and P values
+    fscanf(input, "%*[^\n]\n"); // Skip row
+    fscanf(input, "%*[^\n]\n"); // Skip row
     // Count how many  rows (nodes) we have in the file
     int n_count = 0;
     for (int i = 0; i < N_MAX; i++) {
@@ -149,18 +156,8 @@ int main(void){
             cluster[j].perimeter = cluster[j].perimeter + 4 -cluster[j].getNode(i).n_neighbors;
     }
 
-
-
     //for(int j = 0; j < max; j++)
     //    cout << "Cluster: " << j << " Nodes:" << cluster[j].N << " Scale: " << cluster[j].scale << " Perimeter: " << cluster[j].perimeter << "\n";
-
-    int L;
-    float P;
-
-    FILE *stats;
-    stats = fopen("lattice_stats.txt", "r");
-    fscanf(stats, "%i\t%f", &L, &P);
-    fclose(stats);
 
     char filename[100]; // Asegúrate de que el tamaño sea suficiente para contener el nombre del archivo
     sprintf(filename, "cluster_data_(L=%i, P=%f).txt", L, P);

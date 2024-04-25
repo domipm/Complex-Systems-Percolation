@@ -257,8 +257,6 @@ class Lattice {
 
 };
 
-/*
-
 class Cluster{
 
     public:
@@ -294,5 +292,3 @@ class Cluster{
     }
     
 };
-
-*/

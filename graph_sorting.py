@@ -76,7 +76,8 @@ ax.scatter(x,y,c=c,cmap="rainbow")
 # Plot inactive nodes as black points
 for i in range(len(x)):
     if (s[i] == 0):
-        ax.scatter(x[i],y[i],color="white",s=45) # White s=45 for invisible inactive
+        ax.scatter(x[i],y[i],color="black") # Shows inactive nodes
+        #ax.scatter(x[i],y[i],color="white",s=45) # Inactive nodes hidden
     if (s[i] == 1 and show_circles == True):
         #ax.scatter(x[i],y[i],color="red")
         ax.add_artist( plt.Circle( (x[i], y[i]), D, fill=False, color="black", alpha=0.15 ) )

@@ -10,4 +10,4 @@ In the different folders are located additional percolation use cases and exampl
 
 Apart from the standard C++ and Python libraries, we also make use of the GSL library (in particular, the module "gsl_rng" used to generate random numbers).
 
-![percolation](https://gcdnb.pbrd.co/images/Oktt63RPLirx.gif?o=1 | width = 100)
+<img src="[https://github.com/favicon.ico](https://gcdnb.pbrd.co/images/Oktt63RPLirx.gif?o=1)" width="48">

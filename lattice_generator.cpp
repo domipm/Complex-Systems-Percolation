@@ -10,9 +10,6 @@
 #include"percolation.hpp"
 using namespace std;
 
-// Maximum size of arrays
-//#define N_MAX 1000000
-
 // Nodes to generate
 int N = 25;
 // Length of square inside which nodes are generated

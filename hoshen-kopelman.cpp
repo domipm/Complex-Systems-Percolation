@@ -8,8 +8,8 @@
 
 #include"percolation.hpp"
 
-// Maximum size of arrays
-#define N_MAX 100000
+// Maximum size of arrays (check so it is the same as in percolation.hpp!)
+#define N_MAX 1000000
 
 // Nodes to print (later on specified by n_count)
 int N;
@@ -129,9 +129,9 @@ int main(void) {
                 int cl_min = std::min(nodes[n].cluster_index, nodes[n].min_neighbor_label(nodes));
                 // Set cluster index of node to the minimum of its current value and the minimum value of its neighbors
                 nodes[n].cluster_index = cl_min;
-                for (int i = 0; i < n_count; i++)
-                    if (nodes[n].neighbors[i] >= 0)
-                        nodes[nodes[n].neighbors[i]].cluster_index = cl_min;
+                // For nodes[n] go over all its neighbors
+                for (int i = 0; i < nodes[n].neighbors.size(); i++)
+                    nodes[nodes[n].neighbors.at(i)].cluster_index = cl_min;
             }   
         }
         // Increase step counter

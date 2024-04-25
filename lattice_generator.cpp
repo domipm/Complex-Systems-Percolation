@@ -11,14 +11,14 @@
 using namespace std;
 
 // Maximum size of arrays
-#define N_MAX 100000
+//#define N_MAX 1000000
 
 // Nodes to generate
-int N = 10000;
+int N = 25;
 // Length of square inside which nodes are generated
-int L = 100;
+int L = 40;
 // Initial probability
-float P = 0.1;
+float P = 0.4;
 
 int main(void) {
 

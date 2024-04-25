@@ -10,5 +10,5 @@ In the different folders are located additional percolation use cases and exampl
 
 Apart from the standard C++ and Python libraries, we also make use of the GSL library (in particular, the module "gsl_rng" used to generate random numbers).
 
-<a href="url"><img src="https://gcdnb.pbrd.co/images/Oktt63RPLirx.gif?o=1" align="left" height="256" width="256" class="center" ></a>
+<a href="url"><img src="https://gcdnb.pbrd.co/images/Oktt63RPLirx.gif?o=1" height="512" width="512" class="center" ></a>
 

@@ -2,20 +2,21 @@
 
     CODE USED TO GENERATE THE (LATTICE OR NON-LATTICE) SYSTEM OF NODES
     OUTPUTS: "lattice.txt" -> Text file with the positions and activity status of all nodes
-                              (by default, all nodes have cluster_index = -1)
+                            (by default, all nodes have cluster_index = -1)
 
 */
 
 // Include library with all classes necessary
 #include"percolation.hpp"
+using namespace std;
 
 // Maximum size of arrays
-#define N_MAX 10000
+#define N_MAX 100000
 
 // Nodes to generate
-int N = 250;
+int N = 10000;
 // Length of square inside which nodes are generated
-int L = 15;
+int L = 100;
 // Initial probability
 float P = 0.1;
 

@@ -3,13 +3,14 @@
 #include<math.h>
 #include<stdio.h>
 #include<stdlib.h>
+using namespace std;
 
 #include<chrono>
 #include<iostream>
 
 #include"gsl_rng.h"
 
-#define N_MAX 1000
+#define N_MAX 100000
 
 // Random variable pointer
 gsl_rng *mu;
@@ -36,7 +37,7 @@ class Node {
         int n_neighbors;
 
         // Number of nodes in lattice
-        int N = 25;
+        int N;
 
         // Default constructor
         Node() {
@@ -168,7 +169,7 @@ class Lattice {
             for (int i = 0; i < N_MAX; i++)
                 nodes[i].index = i;
 
-            // Set number of nodes, length of square and probability of being active
+            // Set number of nodes and length of square 
             n_nodes = N;
             length = L;
 
@@ -204,6 +205,7 @@ class Lattice {
                 }
 
             }
+            
 
             // Triangular lattice (to implement...)
             else if (type == "tri") {

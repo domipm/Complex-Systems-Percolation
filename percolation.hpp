@@ -14,9 +14,6 @@
 // Random variable pointer
 gsl_rng *mu;
 
-// Number of nodes that are being generated
-//int N = 25;
-
 // NODE CLASS
 class Node {
 

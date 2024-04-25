@@ -36,7 +36,7 @@ class Node {
         int n_neighbors;
 
         // Number of nodes in lattice
-        int N = 25;
+        int N;
 
         // Default constructor
         Node() {

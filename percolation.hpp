@@ -10,7 +10,7 @@ using namespace std;
 
 #include"gsl_rng.h"
 
-#define N_MAX 100000
+#define N_MAX 10000
 
 // Random variable pointer
 gsl_rng *mu;

@@ -9,7 +9,7 @@
 #include"percolation.hpp"
 
 // Maximum size of arrays
-#define N_MAX 100000
+#define N_MAX 10000
 
 // Nodes to print (later on specified by n_count)
 int N;

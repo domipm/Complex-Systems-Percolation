@@ -59,7 +59,7 @@ int main(void){
     cout << "Number of Clusters: " << max << "\n";
     cout << "Total number of nodes: " << n_count << "\n";
     cout << "Number of active nodes: " << actives << "\n";
-
+    cout << "que" << "\n";
 
     //cluster cluster[max];
     Cluster *cluster;

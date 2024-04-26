@@ -12,6 +12,7 @@ tempCodeRunnerFile.cpp
 *.csv
 *.png
 *.txt
+*.gif
 
 #Extensionless files
 #*

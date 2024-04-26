@@ -10,13 +10,10 @@
 #include"percolation.hpp"
 using namespace std;
 
-// Maximum size of arrays
-#define N_MAX 10000
-
 // Nodes to generate
-int N = 10000;
+int N = 25;
 // Length of square inside which nodes are generated
-int L = 101;
+int L = 40;
 // Initial probability
 float P = 0.40;
 

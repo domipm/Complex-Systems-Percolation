@@ -13,9 +13,9 @@ using namespace std;
 // Nodes to generate
 int N = 25;
 // Length of square inside which nodes are generated
-int L = 40;
+int L = 600;
 // Initial probability
-float P = 0.40;
+float P = 0.583;
 
 int main(void) {
 

@@ -259,7 +259,7 @@ class Lattice {
 class Cluster{
 
     public:
-   
+    
     // Number of elements
     int N;
     // Index
@@ -270,13 +270,11 @@ class Cluster{
     int perimeter;    
 
     // Elements of the cluster
-    Node* tree;   
+    std::vector<Node> tree = std::vector<Node>(0);  
 
     //Constructor
     Cluster() {
 
-        tree = new Node[N_MAX];
-        for (int i = 0; i < N_MAX; i++) tree[i].index = i;
         N=0; 
         Index=0; 
         scale=0; 

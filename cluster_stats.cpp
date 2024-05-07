@@ -59,7 +59,7 @@ int main(void){
     cout << "Number of Clusters: " << max << "\n";
     cout << "Total number of nodes: " << n_count << "\n";
     cout << "Number of active nodes: " << actives << "\n";
-    cout << "que" << "\n";
+    
 
     //cluster cluster[max];
     Cluster *cluster;
@@ -86,25 +86,24 @@ int main(void){
     
     
 
-                //Fill the elements of the clusters
+                                //Fill in the elements of the clusters
     for(int j =0; j < max; j++){
-        int cont = 0;
+        //int cont = 0;
         for(int i = 0; i < n_count; i++){
             if((nodes[i].is_active == true)&&(nodes[i].cluster_index == cluster[j].Index)){
                 
                 //cout << "Comprobaciones:" << "\n";
-                //cout << nodes[i].cluster_index << "\n";
-                //cout << cluster[j].GreatN << "\n";
-                //cout << cluster[j].getNode(cont).x << "\n";
+    /*
                 cluster[j].getNode(cont).cluster_index = nodes[i].cluster_index;
                 cluster[j].getNode(cont).x = nodes[i].x;
                 cluster[j].getNode(cont).y = nodes[i].y;
                 cluster[j].getNode(cont).is_active = nodes[i].is_active;
                 cluster[j].getNode(cont).n_neighbors = nodes[i].n_neighbors;
-                //cout << cluster[j].getNode(cont).y << endl;
-                //cout << j << "\n";
+    */            
+                cluster[j].tree.push_back(nodes[i]); 
+
                 //cout << cont << "\n";
-                cont++;
+                //cont++;
             }
         }
     }

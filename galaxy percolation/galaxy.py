@@ -44,15 +44,15 @@ nodes = []
 active_nodes = []
 
 # Probability of initially active
-P0 = 0.0075
+P0 = 0.005
 # Number of radial rings (~ total radius of galaxy)
 R0 = 50
 
 # Generate all nodes, initially non-active
 # Radius between 2 and total radius R0
-for r in np.arange(2,R0):
+for r in np.arange(1,R0):
     # Angular coordinate between 0 and 2pi, for each radius generate 7*r nodes
-    for theta in np.linspace(0,2*np.pi,7*r):
+    for theta in np.linspace(0,2*np.pi,6*r+1):
         # Create the node
         node = Node(r,theta) 
         # Randomly activate some nodes
@@ -77,9 +77,9 @@ df = pd.DataFrame({"r" + str(0): r_array, "theta" + str(0): theta_array})
 # Number of iterations
 N = 10
 # Probability of star-formation propagation
-P = 0.25
+P = 0.18
 # Velocity (radial-dependent rotation)
-V = 55
+V = 50
 # Distance to nearest neighbor check
 D = 1.25
 

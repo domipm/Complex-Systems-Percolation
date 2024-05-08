@@ -167,8 +167,6 @@ class Lattice {
             // Square lattice (begins at point (1,1))
             if (type == "sqr") {
 
-                printf("SQUARE LATTICE\n");
-
                 // Check if the dimensions are correct
                 if (length*length != n_nodes)
                     // Prioritize length parameter and make number of nodes match
@@ -186,8 +184,6 @@ class Lattice {
 
             // Triangular lattice (to implement...)
             else if (type == "tri") {
-
-                printf("TRIANGULAR LATTICE\n");
 
                 // Check if the dimensions are correct
                 if (length*length != n_nodes)
@@ -210,8 +206,6 @@ class Lattice {
 
             // In any other case print random lattice
             else {
-
-                printf("RANDOM LATTICE\n");
 
                 for (int i = 0; i < n_nodes; i++) {
 
@@ -259,7 +253,7 @@ class Lattice {
 class Cluster{
 
     public:
-   
+    
     // Number of elements
     int N;
     // Index
@@ -268,15 +262,15 @@ class Cluster{
     int scale;
     // Perimeter of the cluster
     int perimeter;    
+    // Number of nodes in the cluster
+    int n_nodes;
 
     // Elements of the cluster
-    Node* tree;   
+    std::vector<Node> tree = std::vector<Node>(0);  
 
     //Constructor
     Cluster() {
 
-        tree = new Node[N_MAX];
-        for (int i = 0; i < N_MAX; i++) tree[i].index = i;
         N=0; 
         Index=0; 
         scale=0; 
@@ -287,6 +281,12 @@ class Cluster{
     //Access the element 'pos' of the cluster
     Node& getNode(int pos) {
         return tree[pos];
+
+    }
+
+    void get_n_nodes() {
+
+        n_nodes = std::size(tree);
 
     }
     

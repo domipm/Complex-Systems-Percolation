@@ -13,9 +13,9 @@ using namespace std;
 // Nodes to generate
 int N = 25;
 // Length of square inside which nodes are generated
-int L = 600;
+int L = 400;
 // Initial probability
-float P = 0.583;
+float P = 0.493;
 
 int main(void) {
 
@@ -23,7 +23,7 @@ int main(void) {
     Lattice lattice(N, L);
 
     // Generate a randomly distributed lattice
-    lattice.generate("sqr", P);
+    lattice.generate("tri", P);
     // Display lattice on screen
     lattice.display_lattice();
     // Save lattice to file

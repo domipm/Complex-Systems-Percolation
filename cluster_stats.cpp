@@ -152,7 +152,7 @@ int main(void){
     for(int j = 0; j < max; j++){
         cluster[j].perimeter = 0;
         for(int i = 0; i < cluster[j].N; i++)
-            cluster[j].perimeter = cluster[j].perimeter + 4 -cluster[j].getNode(i).n_neighbors;
+            cluster[j].perimeter = cluster[j].perimeter + 6 -cluster[j].getNode(i).n_neighbors;
     }
 
     //for(int j = 0; j < max; j++)

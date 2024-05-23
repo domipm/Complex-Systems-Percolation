@@ -4,7 +4,7 @@
 // Nodes to generate (not used here)
 int N = 25;
 // Length of square inside which nodes are generated
-int L = 100;
+int L = 200;
 // Initial probability (not used here)
 float P = 0.0;
 // Distance-to-neighbor threshold
@@ -35,16 +35,18 @@ int main(void) {
     //cluster cluster[max];
     Cluster *cluster;
 
-    for (float p = 0.00; p <= 1.00; p += 0.1) {
+    for (float p = 0.00; p <= 1.00; p += 0.05) {
 
         std::cout << "*** ITERATION P = " << p << " ***" << std::endl;
 
         /* LATTICE GENERATOR */
 
-        // Generate a square lattice
+        // Restart lattice (all nodes inactive initially)
+        for (int i = 0; i < N_MAX; i++)
+            lattice.nodes[i].is_active = 0;
+
+        // Generate a square lattice each iteration with the new probability
         lattice.generate("sqr", p);
-        // Display lattice on screen
-        //lattice.display_lattice();
 
         /* HOSHEN-KOPELMAN */
 
@@ -195,11 +197,11 @@ int main(void) {
         float avg_csize = 0.0;
         float n_clusters = 0;
         for (int i = 0; i < max; i++) {
-            if (cluster[i].n_nodes != 0) {
+            if (cluster[i].n_nodes != 0 && cluster[i].n_nodes <= L) {
 
                 avg_csize += cluster[i].n_nodes;
                 n_clusters++;
-                std::cout << cluster[i].Index << "\t" << cluster[i].n_nodes << std::endl;
+                //std::cout << cluster[i].Index << "\t" << cluster[i].n_nodes << std::endl;
 
             }
         }

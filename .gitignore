@@ -7,6 +7,7 @@ Complex-Systems-Percolation.code-workspace
 #CPP compiler files
 *.o
 tempCodeRunnerFile.cpp
+tempCodeRunnerFile.py
 
 #Output files (temporary)
 *.csv

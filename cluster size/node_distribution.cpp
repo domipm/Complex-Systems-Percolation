@@ -187,6 +187,7 @@ int main(void) {
     // Calculate the number of nodes in each cluster
     for (int n = 0; n < max; n++) cluster[n].get_n_nodes();
 
+    // Compute average cluster size
     float avg_csize = 0.0;
     float n_clusters = 0;
     for (int i = 0; i < max; i++) {
@@ -194,15 +195,15 @@ int main(void) {
 
             avg_csize += cluster[i].n_nodes;
             n_clusters++;
-            //std::cout << cluster[i].Index << "\t" << cluster[i].n_nodes << std::endl;
 
         }
     }
 
+    // Display average cluste size
     avg_csize = avg_csize/n_clusters;
-
     std::cout << "Average cluster size: " << avg_csize << std::endl;
 
+    // Output number of nodes in each cluster into file
     for (int i = 0; i < max; i++)
         if (cluster[i].n_nodes != 0)
             fprintf(file, "%i\t%i\n", cluster[i].Index, cluster[i].n_nodes);

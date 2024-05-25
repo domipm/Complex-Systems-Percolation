@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.optimize as opt
 
 # BELOW CRITICAL PROBABILITY
 
@@ -10,8 +11,8 @@ plt.bar(vals[0], vals[1], width=0.9)
 #plt.plot(vals[0], vals[1])
 #plt.hist(x=data[:,1], bins=30)
 
-plt.title(r"Average cluster size (Triangular lattice $P < P_c$)")
-plt.xlabel("Number of nodes in cluster")
+plt.title(r"Average cluster size (Triangular lattice $p < p_c$)")
+plt.xlabel(r"Number of nodes in cluster $n_s$")
 
 plt.xticks([1,5,10,15,20,25,30,35,40])
 
@@ -25,7 +26,7 @@ plt.close()
 
 # AT CRITICAL PROBABILITY
 
-data = np.loadtxt("300_0.45.txt", skiprows=1)
+data = np.loadtxt("400_0.50.txt", skiprows=1)
 vals = np.unique(data[:,1], return_counts=True)
 
 fig, ax1 = plt.subplots()
@@ -41,11 +42,29 @@ ax2.set_yscale("log")
 
 ax2.text(x=100, y=850, s="log/log plot", fontsize=10)
 
-ax1.set_title(r"Average cluster size (Triangular lattice $P \sim P_c$)")
-ax1.set_xlabel("Number of nodes in cluster")
+ax1.set_title(r"Average cluster size (Triangular lattice $p \sim p_c$)")
+ax1.set_xlabel(r"Number of nodes in cluster $n_s$")
 
 ax1.hist(x=data[:,1], bins=30, rwidth=0.9)
 ax2.bar(vals[0], vals[1], width=0.9)
+
+ax2.set_ylim(0, 1.5*10e2)
+#ax2.set_xlim(10e0, 10e3)
+
+# Power law fit of values
+def func(x, a, b):
+
+    return a*x**-b
+
+
+# Perform curve fit
+popt, pcov = opt.curve_fit(func, vals[0], vals[1])
+
+# Plot regression
+print(popt)
+ax2.plot(vals[0], func(vals[0], *popt), marker="", linestyle="-", linewidth=2, color="tab:orange")
+
+#ax2.hist(x=data[:,1], bins=30, rwidth=0.9)
 
 #plt.bar(vals[0], vals[1], width=0.9)
 #plt.hist(x=data[:,1], bins=30, rwidth=0.9)
@@ -58,8 +77,8 @@ ax2.bar(vals[0], vals[1], width=0.9)
 #plt.xscale("log")
 
 #plt.tight_layout()
-plt.savefig("tri_at.png", dpi=300, bbox_inches="tight")
-#plt.show()
+#plt.savefig("tri_at.png", dpi=300, bbox_inches="tight")
+plt.show()
 plt.close()
 
 # ABOVE CRITICAL PROBABILITY
@@ -104,15 +123,9 @@ ax2.set_yscale("log")
 #ax.set_xlabel("Number of nodes in cluster")
 #ax.xaxis.set_label_coords(1.4, 0.12, transform=fig.transFigure)
 
-ax.set_title(r"Average cluster size (Triangular lattice $P > P_c$)", loc="center").set_position((1.1,0))
-ax.set_xlabel("Number of nodes in cluster", loc="center").set_position((1.1,0))
-'''
-title = axes[0].set_title('Title')
+ax.set_title(r"Average cluster size (Triangular lattice $p > p_c$)", loc="center").set_position((1.1,0))
+ax.set_xlabel(r"Number of nodes in cluster $n_s$", loc="center").set_position((1.1,0))
 
-offset = np.array([-0.15, 0.0])
-title.set_position(ax0label.get_position() + offset)
-title.set_rotation(90)
-'''
 ax.set_xticks([0,4000, 8000])
 ax2.set_xticks([60000, 70000])
 

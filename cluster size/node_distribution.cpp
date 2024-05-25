@@ -1,12 +1,10 @@
 // Include library with all classes necessary
 #include"percolation.hpp"
 
-// Nodes to generate (not used here)
-int N = 25;
 // Length of square inside which nodes are generated
-int L = 300;
-// Initial probability (not used here)
-float P = 0.48;
+int L = 400;
+// Initial probability
+float P = 0.5;
 // Distance-to-neighbor threshold
 float D = 1.25;
 
@@ -39,8 +37,6 @@ int main(void) {
 
     // Generate a square lattice
     lattice.generate("tri", P);
-    // Display lattice on screen
-    //lattice.display_lattice();
 
     /* HOSHEN-KOPELMAN */
 

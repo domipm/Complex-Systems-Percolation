@@ -21,6 +21,7 @@ tempCodeRunnerFile.py
 
 #Testing files
 test*
+luisda*
 
 #GSL Library
 gsl_rng.h

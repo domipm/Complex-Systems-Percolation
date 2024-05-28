@@ -25,4 +25,5 @@ luisda*
 
 #GSL Library
 gsl_rng.h
+gsl_randist.h
 galaxy percolation/tempCodeRunnerFile.py

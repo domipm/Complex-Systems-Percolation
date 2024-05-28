@@ -1,81 +1,25 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
-D = 1.5
-show_circles = True
-show_index = True
-show_graph = False
+data = np.loadtxt("forest_results.txt", skiprows=1)
 
-# PLOT INITIAL STATE
+plt.plot(data[:,0], data[:,1], label="R = 1.00")
+plt.plot(data[:,0], data[:,2], label="R = 0.75")
+plt.plot(data[:,0], data[:,3], label="R = 0.50")
+plt.plot(data[:,0], data[:,4], label="R = 0.33")
+plt.plot(data[:,0], data[:,5], label="R = 0.25")
+plt.plot(data[:,0], data[:,6], label="R = 0.15")
+plt.plot(data[:,0], data[:,7], label="R = 0.10")
+plt.plot(data[:,0], data[:,8], label="R = 0.05")
+plt.plot(data[:,0], data[:,9], label="R = 0.00")
 
-data_init = np.loadtxt("rnd_out_init.txt", skiprows=1)
-fig, ax = plt.subplots()
-ax.set_aspect(1)
+#plt.vlines([0.2401, 0.2442, 0.2600, 0.2905, 0.3104, 0.3696, 0.4097, 0.5780], 1, 25, color="dimgrey", linestyle="--")
 
-ax.set_xlim((0,10))
-ax.set_ylim((0,10))
+plt.title("Average cluster size random forest")
 
-x = data_init[:,1] # X position
-y = data_init[:,2] # Y position
-s = data_init[:,3] # Status (active/inactive)
-c = data_init[:,4] # cluster_index
+plt.xlabel(r"Probability $p$")
+plt.ylabel(r"Average cluster size $\overline{s}$")
 
-# Plot all points
-ax.scatter(x,y,color="orangered")
-# Plot inactive nodes as black points
-for i in range(len(x)):
-    if (s[i] == 0):
-        ax.scatter(x[i],y[i],color="black")
-    if (s[i] == 1 and show_circles == True):
-        #ax.scatter(x[i],y[i],color="red")
-        ax.add_artist( plt.Circle( (x[i], y[i]), D, fill=False, color="black", alpha=0.15 ) )
-
-if show_index == True:
-    n = []
-    for i in range(len(x)):
-        n = np.append(n, str(i))
-    for i,n in enumerate(n):
-        ax.annotate(n,(x[i],y[i]),size=6, xytext = (x[i]+0.1,y[i]+0.1))
-
-plt.tight_layout()
-
-plt.savefig("testing_init.png", dpi=300, bbox_inches='tight')
-plt.close()
-
-# PLOT FINAL STATE
-
-data = np.loadtxt("rnd_out.txt", skiprows=1)
-
-x = data[:,1] # X position
-y = data[:,2] # Y position
-s = data[:,3] # Status (active/inactive)
-c = data[:,4] # cluster_index
-
-fig, ax = plt.subplots()
-ax.set_aspect(1)
-
-ax.set_xlim((0,10))
-ax.set_ylim((0,10))
-
-# Plot all points
-ax.scatter(x,y,c=c,cmap="rainbow")
-# Plot inactive nodes as black points
-for i in range(len(x)):
-    if (s[i] == 0):
-        ax.scatter(x[i],y[i],color="black")
-    if (s[i] == 1 and show_circles == True):
-        #ax.scatter(x[i],y[i],color="red")
-        ax.add_artist( plt.Circle( (x[i], y[i]), D, fill=False, color="black", alpha=0.15 ) )
-
-if show_index == True:
-    n = []
-    for i in range(len(x)):
-        n = np.append(n, str(i))
-    for i,n in enumerate(n):
-        ax.annotate(n,(x[i],y[i]),size=6, xytext = (x[i]+0.1,y[i]+0.1))
-
-plt.tight_layout()
-
-plt.savefig("testing.png", dpi=300, bbox_inches='tight')
-if (show_graph): plt.show()
+plt.legend()
+plt.savefig("forest.png", dpi=300, bbox_inches="tight")
+plt.show()

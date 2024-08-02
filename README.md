@@ -12,6 +12,6 @@ Apart from the standard C++ and Python libraries, we also make use of the GSL li
 <br/><br/>
 
 <p align="center">
-  <img src="https://gcdnb.pbrd.co/images/Oktt63RPLirx.gif?o=1" height="512" width="512" >
+  <img src="https://github.com/domipm/Complex-Systems-Percolation/blob/main/example_visualization.gif" height="512" width="512" >
 </p>
 
